@@ -27,19 +27,22 @@ if (isset($_GET)) {
 		$sex = $_GET['sex'];
 		$email = $_GET['email'];
 		$pic_members = $_GET['pic_members'];
-		//$role_id  = $_GET['role_id '];
+		$role_id  = $_GET['role_id'];
 		
 
 		
 							
-		$sql = "INSERT INTO `members`(`members_id`, `user`, `password`, `name_prefix`, `name`, `surname`, `sex`, `email`, `pic_members`, `role_id`) VALUES (Null,'$user','$password','$name_prefix','$name','$surname','$sex','$email','$pic_members')";
+		$sql = "INSERT INTO `members`(`members_id`, `user`, `password`, `name_prefix`, `name`, `surname`, `sex`, `email`, `pic_members`, `role_id`) VALUES (Null,'$user','$password','$name_prefix','$name','$surname','$sex','$email','$pic_members','$role_id')";
+
 
 		$result = mysqli_query($link, $sql);
+        echo $sql;
 
 		if ($result) {
 			echo "true";
 		} else {
 			echo "false";
+			
 		}
 
 	} else echo "Welcome Master UNG";
