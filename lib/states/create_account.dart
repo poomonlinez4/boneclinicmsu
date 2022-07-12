@@ -4,6 +4,7 @@ import 'package:boneclinicmsu/unility/my_constant.dart';
 import 'package:boneclinicmsu/unility/my_dialod.dart';
 import 'package:boneclinicmsu/widgets/show_image.dart';
 import 'package:boneclinicmsu/widgets/show_title.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -20,6 +21,12 @@ class _CreateAccountState extends State<CreateAccount> {
   final formKey = GlobalKey<
       FormState>(); //formkeyเป็นตัวเชื่อม text formfild ว่ามีค่าหรือเปล่า
 
+  TextEditingController nameController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController userController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   Row buildName(double size) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -28,6 +35,7 @@ class _CreateAccountState extends State<CreateAccount> {
           margin: EdgeInsets.only(top: 16),
           width: size * 0.6,
           child: TextFormField(
+            controller: nameController,
             validator: (value) {
               if (value!.isEmpty) {
                 return 'กรุณากรอก Name ด้วยค่ะ';
@@ -63,6 +71,7 @@ class _CreateAccountState extends State<CreateAccount> {
           margin: EdgeInsets.only(top: 16),
           width: size * 0.6,
           child: TextFormField(
+            controller: phoneController,
             keyboardType: TextInputType.phone, //ทำให้คีย์บอร์ดกดได้แค่แบบตัวเลข
             validator: (value) {
               if (value!.isEmpty) {
@@ -99,6 +108,7 @@ class _CreateAccountState extends State<CreateAccount> {
           margin: EdgeInsets.only(top: 16),
           width: size * 0.6,
           child: TextFormField(
+            controller: userController,
             validator: (value) {
               if (value!.isEmpty) {
                 return 'กรุณากรอก User ด้วยค่ะ';
@@ -134,6 +144,7 @@ class _CreateAccountState extends State<CreateAccount> {
           margin: EdgeInsets.only(top: 16),
           width: size * 0.6,
           child: TextFormField(
+            controller: passwordController,
             validator: (value) {
               if (value!.isEmpty) {
                 return 'กรุณากรอก Password ด้วยค่ะ';
@@ -169,6 +180,7 @@ class _CreateAccountState extends State<CreateAccount> {
           margin: EdgeInsets.only(top: 16),
           width: size * 0.6,
           child: TextFormField(
+            controller: addressController,
             validator: (value) {
               if (value!.isEmpty) {
                 return 'กรุณากรอก Address ด้วยค่ะ';
@@ -252,11 +264,32 @@ class _CreateAccountState extends State<CreateAccount> {
                 'กรุณา Tap ที่ชนิดของ User ที่ต้องการ');
           } else {
             print('Process Insert to Database');
+            uploadPictureAndInsertData();
           }
         }
       },
       icon: Icon(Icons.cloud_upload),
     );
+  }
+
+  Future<Null> uploadPictureAndInsertData() async {
+    String name = nameController.text;
+    String address = addressController.text;
+    String phone = phoneController.text;
+    String user = userController.text;
+    String password = passwordController.text;
+    print(
+        '## name = $name, address = $address, phone = $phone, user = $user, password = $password');
+    String path =
+        '${MyConstant.domain}/boneclinic/getUserWhereUser.php?isAdd=true&user=$user';
+    await Dio().get(path).then((value) {
+      print(' ## value ==>> $value');
+      if (value.toString() == 'null') {
+        print('## user OK ');
+      } else {
+        MyDialog().normalDialog(context, 'User false ?', 'Please Change User');
+      }
+    });
   }
 
   Future<Null> chooseImage(ImageSource source) async {

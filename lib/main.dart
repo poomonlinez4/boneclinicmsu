@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:boneclinicmsu/states/admin_service.dart';
 import 'package:boneclinicmsu/states/authen.dart';
 import 'package:boneclinicmsu/states/create_account.dart';
@@ -18,7 +20,17 @@ String? initlalRoute;
 
 void main() {
   initlalRoute = MyConstant.routeAuthen;
+  HttpOverrides.global = MyHttpOverrides();
   runApp(MyApp());
+}
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
 }
 
 class MyApp extends StatelessWidget {
