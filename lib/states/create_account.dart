@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:boneclinicmsu/unility/my_constant.dart';
 import 'package:boneclinicmsu/unility/my_dialod.dart';
@@ -17,6 +18,7 @@ class CreateAccount extends StatefulWidget {
 
 class _CreateAccountState extends State<CreateAccount> {
   String? typeUser;
+  String avatar = '';
   File? file; //เกี่ยวกับรูปภาพ
   final formKey = GlobalKey<
       FormState>(); //formkeyเป็นตัวเชื่อม text formfild ว่ามีค่าหรือเปล่า
@@ -282,12 +284,68 @@ class _CreateAccountState extends State<CreateAccount> {
         '## name = $name, address = $address, phone = $phone, user = $user, password = $password');
     String path =
         '${MyConstant.domain}/boneclinic/getUserWhereUser.php?isAdd=true&user=$user';
-    await Dio().get(path).then((value) {
+    await Dio().get(path).then((value) async {
       print(' ## value ==>> $value');
       if (value.toString() == 'null') {
         print('## user OK ');
+
+        if (file == null) {
+          //No Avatar
+          processInsertMySQL(
+            name: name,
+            address: address,
+            phone: phone,
+            user: user,
+            password: password,
+          );
+        } else {
+          // Have Avatar
+          print('### process Update Avatar');
+          String apiSaveAvatar =
+              '${MyConstant.domain}/boneclinic/saveAvatar.php';
+          int i = Random().nextInt(100000);
+          String nameAvatar = 'avatar$i.jpg';
+          Map<String, dynamic> map = Map();
+          map['file'] =
+              await MultipartFile.fromFile(file!.path, filename: nameAvatar);
+          FormData data = FormData.fromMap(map);
+          await Dio().post(apiSaveAvatar, data: data).then((value) {
+            avatar = '/boneclinic/avatar/$nameAvatar';
+            processInsertMySQL(
+              name: name,
+              address: address,
+              phone: phone,
+              user: user,
+              password: password,
+            );
+          });
+        }
       } else {
         MyDialog().normalDialog(context, 'User false ?', 'Please Change User');
+      }
+    });
+  }
+
+  Future<Null> processInsertMySQL(
+      {String? user,
+      String? password,
+      String? name_prefix,
+      String? name,
+      String? surname,
+      String? sex,
+      String? address,
+      String? phone,
+      String? email,
+      String? pic_members}) async {
+    print('### processInsertMySQL work and avatar ==> $avatar');
+    String apiInsertData =
+        '${MyConstant.domain}/boneclinic/insertData.php?isAdd=true&user=$user&password=$password&name_prefix=$name_prefix&name=$name&surname=$surname&sex=$sex&address=$address&phone=$phone&email=$email&pic_members=$pic_members&role_id=3';
+    await Dio().get(apiInsertData).then((value) {
+      if (value.toString() == 'true') {
+        Navigator.pop(context);
+      } else {
+        MyDialog().normalDialog(
+            context, 'Create New User False !!!', 'Plase Try Again');
       }
     });
   }
