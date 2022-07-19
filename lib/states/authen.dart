@@ -7,6 +7,7 @@ import 'package:boneclinicmsu/widgets/show_image.dart';
 import 'package:boneclinicmsu/widgets/show_title.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Authen extends StatefulWidget {
   const Authen({Key? key}) : super(key: key);
@@ -79,6 +80,15 @@ class _AuthenState extends State<Authen> {
                   String password = passwordController.text;
                   print('## user = $user, password = $password');
                   checkAuthen(user: user, password: password);
+
+                  // SharedPreferences preferences =
+                  // await SharedPreferences.getInstance();
+                  // preferences.setString('type', type);
+                  // preferences.setString('user', model.user);
+
+                  //เชื่อมไปหน้าอื่น ๆ Navigator
+                  Navigator.pushNamed(
+                      context, MyConstant.routeCoustomerService);
                 }
               },
               child: Text('Login'),

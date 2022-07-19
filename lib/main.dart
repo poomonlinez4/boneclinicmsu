@@ -7,6 +7,7 @@ import 'package:boneclinicmsu/states/customer_service.dart';
 import 'package:boneclinicmsu/states/doctor_service.dart';
 import 'package:boneclinicmsu/unility/my_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final Map<String, WidgetBuilder> map = {
   '/authen': (BuildContext context) => Authen(),
@@ -18,10 +19,26 @@ final Map<String, WidgetBuilder> map = {
 
 String? initlalRoute;
 
-void main() {
-  initlalRoute = MyConstant.routeAuthen;
-  HttpOverrides.global = MyHttpOverrides();
-  runApp(MyApp());
+Future<Null> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+
+  //******* แบ่งตาม type
+  //SharedPreferences บันทึก something ลงในเครื่องง
+  String? type = preferences.getString('type');
+  print('### type ===>> $type');
+  if (type?.isEmpty ?? true) {
+    initlalRoute = MyConstant.routeAuthen;
+    runApp(MyApp());
+  } else {
+    switch (type) {
+      case 'customer':
+        initlalRoute = MyConstant.routeCoustomerService;
+        runApp(MyApp());
+        break;
+      default:
+    }
+  }
 }
 
 class MyHttpOverrides extends HttpOverrides {
@@ -38,6 +55,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    HttpOverrides.global = MyHttpOverrides();
     return MaterialApp(
       title: MyConstant.appName,
       routes: map,

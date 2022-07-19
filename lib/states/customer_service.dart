@@ -10,6 +10,15 @@ class CustomerService extends StatefulWidget {
 class _CustomerServiceState extends State<CustomerService> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('Bone Clinic'),
+        ),
+        drawer: Drawer(
+          child: ListTile(
+            leading: Icon(Icons.exit_to_app),
+            title: Text('data'),
+          ),
+        ));
   }
 }

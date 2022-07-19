@@ -24,8 +24,10 @@ class _CreateAccountState extends State<CreateAccount> {
       FormState>(); //formkeyเป็นตัวเชื่อม text formfild ว่ามีค่าหรือเปล่า
 
   TextEditingController nameController = TextEditingController();
+  TextEditingController SurnameController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   TextEditingController userController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -45,7 +47,43 @@ class _CreateAccountState extends State<CreateAccount> {
             },
             decoration: InputDecoration(
               labelStyle: MyConstant().h3style(),
-              labelText: 'Name : ',
+              labelText: 'ชื่อ : ',
+              prefixIcon: Icon(
+                Icons.fingerprint,
+                color: MyConstant.dark,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: MyConstant.dark),
+                borderRadius: BorderRadius.circular(30),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: MyConstant.light),
+                borderRadius: BorderRadius.circular(30),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Row buildSurname(double size) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          margin: EdgeInsets.only(top: 16),
+          width: size * 0.6,
+          child: TextFormField(
+            controller: SurnameController,
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'กรุณากรอก นามสกุล ด้วยค่ะ';
+              }
+            },
+            decoration: InputDecoration(
+              labelStyle: MyConstant().h3style(),
+              labelText: 'นามสกุล : ',
               prefixIcon: Icon(
                 Icons.fingerprint,
                 color: MyConstant.dark,
@@ -77,14 +115,51 @@ class _CreateAccountState extends State<CreateAccount> {
             keyboardType: TextInputType.phone, //ทำให้คีย์บอร์ดกดได้แค่แบบตัวเลข
             validator: (value) {
               if (value!.isEmpty) {
-                return 'กรุณากรอก Phone ด้วยค่ะ';
+                return 'กรุณากรอก เบอร์โทรศัพท์ ด้วยค่ะ';
               }
             },
             decoration: InputDecoration(
               labelStyle: MyConstant().h3style(),
-              labelText: 'Phone : ',
+              labelText: 'เบอร์โทรศัพท์ : ',
               prefixIcon: Icon(
                 Icons.phone,
+                color: MyConstant.dark,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: MyConstant.dark),
+                borderRadius: BorderRadius.circular(30),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: MyConstant.light),
+                borderRadius: BorderRadius.circular(30),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Row buildemail(double size) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          margin: EdgeInsets.only(top: 16),
+          width: size * 0.6,
+          child: TextFormField(
+            controller: emailController,
+            keyboardType: TextInputType.phone, //ทำให้คีย์บอร์ดกดได้แค่แบบตัวเลข
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'กรุณากรอก อีเมล ด้วยค่ะ';
+              }
+            },
+            decoration: InputDecoration(
+              labelStyle: MyConstant().h3style(),
+              labelText: 'อีเมล : ',
+              prefixIcon: Icon(
+                Icons.email,
                 color: MyConstant.dark,
               ),
               enabledBorder: OutlineInputBorder(
@@ -113,12 +188,12 @@ class _CreateAccountState extends State<CreateAccount> {
             controller: userController,
             validator: (value) {
               if (value!.isEmpty) {
-                return 'กรุณากรอก User ด้วยค่ะ';
+                return 'กรุณากรอก ชื่อผู้ใช้ ด้วยค่ะ';
               }
             },
             decoration: InputDecoration(
               labelStyle: MyConstant().h3style(),
-              labelText: 'User : ',
+              labelText: 'ชื่อผู้ใช้ : ',
               prefixIcon: Icon(
                 Icons.perm_identity,
                 color: MyConstant.dark,
@@ -154,7 +229,7 @@ class _CreateAccountState extends State<CreateAccount> {
             },
             decoration: InputDecoration(
               labelStyle: MyConstant().h3style(),
-              labelText: 'Password : ',
+              labelText: 'รหัสผ่าน : ',
               prefixIcon: Icon(
                 Icons.lock_outline,
                 color: MyConstant.dark,
@@ -185,12 +260,12 @@ class _CreateAccountState extends State<CreateAccount> {
             controller: addressController,
             validator: (value) {
               if (value!.isEmpty) {
-                return 'กรุณากรอก Address ด้วยค่ะ';
+                return 'กรุณากรอก ที่อยู่ ด้วยค่ะ';
               }
             },
             maxLines: 4,
             decoration: InputDecoration(
-              hintText: 'Address :',
+              hintText: 'ที่อยู่ :',
               helperStyle: MyConstant().h3style(),
               prefixIcon: Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 60),
@@ -234,17 +309,17 @@ class _CreateAccountState extends State<CreateAccount> {
             child: Column(
               //padding: EdgeInsets.all(16),
               children: [
-                buildTitle('ข้อมูลทั่วไป : '),
-                buildName(size),
-                buildTitle('ชนิดของ User : '),
-                buildRadioCustomer(size),
-                buildRadioDoctor(size),
-                buildRadioAdmin(size),
                 buildTitle('ข้อมูลพื้นฐาน'),
-                buildAddress(size),
-                buildPhone(size),
                 buildUser(size),
                 buildPassword(size),
+                buildTitle('ข้อมูลทั่วไป  '),
+                buildRadioMale(size),
+                buildRadioFemale(size),
+                buildName(size),
+                buildSurname(size),
+                buildAddress(size),
+                buildPhone(size),
+                buildemail(size),
                 buildTitle('รูปภาพ'),
                 buildSubTitle(),
                 buildAvatar(size),
@@ -275,13 +350,16 @@ class _CreateAccountState extends State<CreateAccount> {
   }
 
   Future<Null> uploadPictureAndInsertData() async {
-    String name = nameController.text;
-    String address = addressController.text;
-    String phone = phoneController.text;
     String user = userController.text;
     String password = passwordController.text;
+    String name = nameController.text;
+    String surname = SurnameController.text;
+    String address = addressController.text;
+    String phone = phoneController.text;
+    String email = emailController.text;
+
     print(
-        '## name = $name, address = $address, phone = $phone, user = $user, password = $password');
+        '## user = $user, password = $password, name = $name, surname = $surname, address = $address, phone = $phone, email = $email');
     String path =
         '${MyConstant.domain}/boneclinic/getUserWhereUser.php?isAdd=true&user=$user';
     await Dio().get(path).then((value) async {
@@ -292,11 +370,13 @@ class _CreateAccountState extends State<CreateAccount> {
         if (file == null) {
           //No Avatar
           processInsertMySQL(
-            name: name,
-            address: address,
-            phone: phone,
             user: user,
             password: password,
+            name: name,
+            surname: surname,
+            address: address,
+            phone: phone,
+            email: email,
           );
         } else {
           // Have Avatar
@@ -312,11 +392,13 @@ class _CreateAccountState extends State<CreateAccount> {
           await Dio().post(apiSaveAvatar, data: data).then((value) {
             avatar = '/boneclinic/avatar/$nameAvatar';
             processInsertMySQL(
-              name: name,
-              address: address,
-              phone: phone,
               user: user,
               password: password,
+              name: name,
+              surname: surname,
+              address: address,
+              phone: phone,
+              email: email,
             );
           });
         }
@@ -329,7 +411,6 @@ class _CreateAccountState extends State<CreateAccount> {
   Future<Null> processInsertMySQL(
       {String? user,
       String? password,
-      String? name_prefix,
       String? name,
       String? surname,
       String? sex,
@@ -339,7 +420,7 @@ class _CreateAccountState extends State<CreateAccount> {
       String? pic_members}) async {
     print('### processInsertMySQL work and avatar ==> $avatar');
     String apiInsertData =
-        '${MyConstant.domain}/boneclinic/insertData.php?isAdd=true&user=$user&password=$password&name_prefix=$name_prefix&name=$name&surname=$surname&sex=$sex&address=$address&phone=$phone&email=$email&pic_members=$pic_members&role_id=3';
+        '${MyConstant.domain}/boneclinic/insertData.php?isAdd=true&user=$user&password=$password&name=$name&surname=$surname&sex=$typeUser&address=$address&phone=$phone&email=$email&pic_members=$avatar&role_id=3';
     await Dio().get(apiInsertData).then((value) {
       if (value.toString() == 'true') {
         Navigator.pop(context);
@@ -398,14 +479,14 @@ class _CreateAccountState extends State<CreateAccount> {
         textStyle: MyConstant().h3style());
   }
 
-  Row buildRadioCustomer(double size) {
+  Row buildRadioMale(double size) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
           width: size * 0.6,
           child: RadioListTile(
-            value: 'customer',
+            value: 'Male',
             groupValue: typeUser,
             onChanged: (value) {
               setState(() {
@@ -413,7 +494,7 @@ class _CreateAccountState extends State<CreateAccount> {
               });
             },
             title: ShowTitle(
-              title: 'ลูกค้า (Customer)',
+              title: 'ชาย (Male)',
               textStyle: MyConstant().h3style(),
             ),
           ),
@@ -422,14 +503,14 @@ class _CreateAccountState extends State<CreateAccount> {
     );
   }
 
-  Row buildRadioDoctor(double size) {
+  Row buildRadioFemale(double size) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
           width: size * 0.6,
           child: RadioListTile(
-            value: 'Doctor',
+            value: 'Female',
             groupValue: typeUser,
             onChanged: (value) {
               setState(() {
@@ -437,31 +518,7 @@ class _CreateAccountState extends State<CreateAccount> {
               });
             },
             title: ShowTitle(
-              title: 'แพทย์ (Doctor)',
-              textStyle: MyConstant().h3style(),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Row buildRadioAdmin(double size) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          width: size * 0.6,
-          child: RadioListTile(
-            value: 'Admin',
-            groupValue: typeUser,
-            onChanged: (value) {
-              setState(() {
-                typeUser = value as String?;
-              });
-            },
-            title: ShowTitle(
-              title: 'เจ้าหน้าที่ (Admin)',
+              title: 'หญิง (Female)',
               textStyle: MyConstant().h3style(),
             ),
           ),

@@ -10,6 +10,10 @@ class DoctorService extends StatefulWidget {
 class _DoctorServiceState extends State<DoctorService> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Bone Clinic (Doctor) '),
+      ),
+    );
   }
 }

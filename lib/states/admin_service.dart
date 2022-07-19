@@ -10,6 +10,10 @@ class AdminService extends StatefulWidget {
 class _AdminServiceState extends State<AdminService> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Bone Climic (Admin)'),
+      ),
+    );
   }
 }
