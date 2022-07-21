@@ -79,7 +79,7 @@ class _AuthenState extends State<Authen> {
                   String user = userController.text;
                   String password = passwordController.text;
                   print('## user = $user, password = $password');
-                  checkAuthen(user: user, password: password);
+                  // checkAuthen(user: user, password: password);
 
                   // SharedPreferences preferences =
                   // await SharedPreferences.getInstance();
@@ -110,8 +110,8 @@ class _AuthenState extends State<Authen> {
           UserModel model = UserModel.fromMap(item);
           if (password == model.password) {
             // Success Authen
-            String type = model.password;
-            print('## Authen Success in Type ==> type');
+            //String type = model.password;
+            // print('## Authen Success in Type ==> type');
           } else {
             // Authen False
             MyDialog().normalDialog(context, 'Password False !!!',
