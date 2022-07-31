@@ -1,3 +1,4 @@
+import 'package:boneclinicmsu/widgets/show_signout.dart';
 import 'package:flutter/material.dart';
 
 class AdminService extends StatefulWidget {
@@ -13,6 +14,9 @@ class _AdminServiceState extends State<AdminService> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Bone Climic (Admin)'),
+      ),
+      drawer: Drawer(
+        child: ShowSignOut(),
       ),
     );
   }

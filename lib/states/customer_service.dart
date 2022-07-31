@@ -1,4 +1,8 @@
+import 'package:boneclinicmsu/unility/my_constant.dart';
+import 'package:boneclinicmsu/widgets/show_signout.dart';
+import 'package:boneclinicmsu/widgets/show_title.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomerService extends StatefulWidget {
   const CustomerService({Key? key}) : super(key: key);
@@ -12,13 +16,10 @@ class _CustomerServiceState extends State<CustomerService> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Bone Clinic'),
+          title: Text('Bone Clinic ลูกค้า'),
         ),
         drawer: Drawer(
-          child: ListTile(
-            leading: Icon(Icons.exit_to_app),
-            title: Text('data'),
-          ),
+          child: ShowSignOut(),
         ));
   }
 }
