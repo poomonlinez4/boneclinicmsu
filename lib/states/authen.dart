@@ -88,7 +88,10 @@ class _AuthenState extends State<Authen> {
 
                   //เชื่อมไปหน้าอื่น ๆ Navigator
                   Navigator.pushNamed(
-                      context, MyConstant.routeCoustomerService);
+                      //  context, MyConstant.routeCoustomerService);
+
+                      context,
+                      MyConstant.routeAdminService);
                 }
               },
               child: Text('Login'),

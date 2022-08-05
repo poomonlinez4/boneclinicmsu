@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:boneclinicmsu/states/add_product.dart';
 import 'package:boneclinicmsu/states/admin_service.dart';
 import 'package:boneclinicmsu/states/authen.dart';
 import 'package:boneclinicmsu/states/create_account.dart';
@@ -15,6 +16,7 @@ final Map<String, WidgetBuilder> map = {
   '/customerService': (BuildContext context) => CustomerService(),
   '/doctorService': (BuildContext context) => DoctorService(),
   '/adminService': (BuildContext context) => AdminService(),
+  '/addProduct': (BuildContext context) => AddProduct(),
 };
 
 String? initlalRoute;
@@ -55,11 +57,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MaterialColor materialColor =
+        MaterialColor(0xffba6b6c, MyConstant.mapMaterialColor);
+
     HttpOverrides.global = MyHttpOverrides();
     return MaterialApp(
-      title: MyConstant.appName,
-      routes: map,
-      initialRoute: initlalRoute,
-    );
+        title: MyConstant.appName,
+        routes: map,
+        initialRoute: initlalRoute,
+        theme: ThemeData(primarySwatch: materialColor));
   }
 }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class MyConstant {
   // Genernal
   static String appName = 'Bone Clinic';
-  static String domain = 'https://ab1a-184-82-54-4.ap.ngrok.io';
+  static String domain = 'https://6aa5-184-82-54-151.ap.ngrok.io';
 
   // Route
   static String routeAuthen = '/authen';
@@ -11,6 +11,7 @@ class MyConstant {
   static String routeCoustomerService = '/customerService';
   static String routeDoctorService = '/doctorService';
   static String routeAdminService = '/adminService';
+  static String routeAddProduct = '/addProduct';
 
   // Image
   static String image1 = 'images/image (1).png';
@@ -21,12 +22,25 @@ class MyConstant {
   static String image6 = 'images/image (6).png';
   static String image7 = 'images/image (7).png';
   static String image8 = 'images/image (8).png';
+  static String image9 = 'images/image9.png';
   static String avatar = 'images/avatar.png';
 
   //Color
   static Color primary = Color(0xffef9a9a);
   static Color dark = Color(0xffba6b6c);
   static Color light = Color(0xffffcccb);
+  static Map<int, Color> mapMaterialColor = {
+    50: Color.fromRGBO(186, 107, 108, 0.1),
+    100: Color.fromRGBO(186, 107, 108, 0.2),
+    200: Color.fromRGBO(186, 107, 108, 0.3),
+    300: Color.fromRGBO(186, 107, 108, 0.4),
+    400: Color.fromRGBO(186, 107, 108, 0.5),
+    500: Color.fromRGBO(186, 107, 108, 0.6),
+    600: Color.fromRGBO(186, 107, 108, 0.7),
+    700: Color.fromRGBO(186, 107, 108, 0.8),
+    800: Color.fromRGBO(186, 107, 108, 0.9),
+    900: Color.fromRGBO(186, 107, 108, 1.0),
+  };
 
   // Style
   TextStyle h1style() => TextStyle(
