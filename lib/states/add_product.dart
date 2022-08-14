@@ -22,6 +22,11 @@ class _AddProductState extends State<AddProduct> {
   final formKey = GlobalKey<FormState>();
   List<File?> files = [];
   File? file;
+  TextEditingController nameController = TextEditingController();
+  TextEditingController detailController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
+  List<String> paths = [];
+
   @override
   void initState() {
     // TODO: implement initState
@@ -105,14 +110,28 @@ class _AddProductState extends State<AddProduct> {
         for (var item in files) {
           int i = Random().nextInt(1000000);
           String nameFile = 'product$i.jpg';
+
+          paths.add('/product/$nameFile');
+
           Map<String, dynamic> map = {};
           map['file'] =
               await MultipartFile.fromFile(item!.path, filename: nameFile);
           FormData data = FormData.fromMap(map);
-          await Dio().post(apiSaveProduct, data: data).then((value) {
+          await Dio().post(apiSaveProduct, data: data).then((value) async {
             print('Upload Success');
             loop++;
             if (loop >= files.length) {
+              String name_product = nameController.text;
+              String price_product = priceController.text;
+              String detail_product = detailController.text;
+              String pic_product = paths.toString();
+              print(
+                  '### name = $name_product,price = $price_product,detail = $detail_product');
+              print('### images ==> ${pic_product}');
+
+              String path =
+                  '${MyConstant.domain}/boneclinic/insertProduct.php?isAdd=true&name_product=$name_product&detail_product=$detail_product&price_product=$price_product&pic_product=$pic_product';
+              await Dio().get(path).then((value) => Navigator.pop(context));
               Navigator.pop(context);
             }
           });
@@ -257,6 +276,7 @@ class _AddProductState extends State<AddProduct> {
       width: constraints.maxWidth * 0.75,
       margin: EdgeInsets.only(top: 16),
       child: TextFormField(
+        controller: nameController,
         validator: (value) {
           if (value!.isEmpty) {
             return 'Please fill Name in Blank';
@@ -293,6 +313,7 @@ class _AddProductState extends State<AddProduct> {
       width: constraints.maxWidth * 0.75,
       margin: EdgeInsets.only(top: 16),
       child: TextFormField(
+        controller: priceController,
         validator: (value) {
           if (value!.isEmpty) {
             return 'Please fill Price in Blank';
@@ -330,6 +351,7 @@ class _AddProductState extends State<AddProduct> {
       width: constraints.maxWidth * 0.75,
       margin: EdgeInsets.only(top: 16),
       child: TextFormField(
+        controller: detailController,
         validator: (value) {
           if (value!.isEmpty) {
             return 'Please fill Detail in Blank';
