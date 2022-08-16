@@ -5,7 +5,6 @@ class UserModel {
   final String members_id;
   final String user;
   final String password;
-  final String name_prefix;
   final String name;
   final String surname;
   final String sex;
@@ -18,7 +17,6 @@ class UserModel {
     required this.members_id,
     required this.user,
     required this.password,
-    required this.name_prefix,
     required this.name,
     required this.surname,
     required this.sex,
@@ -33,7 +31,6 @@ class UserModel {
     String? members_id,
     String? user,
     String? password,
-    String? name_prefix,
     String? name,
     String? surname,
     String? sex,
@@ -47,7 +44,6 @@ class UserModel {
       members_id: members_id ?? this.members_id,
       user: user ?? this.user,
       password: password ?? this.password,
-      name_prefix: name_prefix ?? this.name_prefix,
       name: name ?? this.name,
       surname: surname ?? this.surname,
       sex: sex ?? this.sex,
@@ -64,7 +60,6 @@ class UserModel {
       'members_id': members_id,
       'user': user,
       'password': password,
-      'name_prefix': name_prefix,
       'name': name,
       'surname': surname,
       'sex': sex,
@@ -81,7 +76,6 @@ class UserModel {
       members_id: map['members_id'] as String,
       user: map['user'] as String,
       password: map['password'] as String,
-      name_prefix: map['name_prefix'] as String,
       name: map['name'] as String,
       surname: map['surname'] as String,
       sex: map['sex'] as String,
@@ -100,7 +94,7 @@ class UserModel {
 
   @override
   String toString() {
-    return 'UserModel(members_id: $members_id, user: $user, password: $password, name_prefix: $name_prefix, name: $name, surname: $surname, sex: $sex, address: $address $sex, phone: $phone, email: $email, pic_members: $pic_members, role_id: $role_id)';
+    return 'UserModel(members_id: $members_id, user: $user, password: $password, name: $name, surname: $surname, sex: $sex, address: $address, phone: $phone, email: $email, pic_members: $pic_members, role_id: $role_id)';
   }
 
   @override
@@ -110,7 +104,6 @@ class UserModel {
     return other.members_id == members_id &&
         other.user == user &&
         other.password == password &&
-        other.name_prefix == name_prefix &&
         other.name == name &&
         other.surname == surname &&
         other.sex == sex &&
@@ -126,7 +119,6 @@ class UserModel {
     return members_id.hashCode ^
         user.hashCode ^
         password.hashCode ^
-        name_prefix.hashCode ^
         name.hashCode ^
         surname.hashCode ^
         sex.hashCode ^

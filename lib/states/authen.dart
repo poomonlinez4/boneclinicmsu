@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:boneclinicmsu/models/user_model.dart';
 import 'package:boneclinicmsu/unility/my_constant.dart';
 import 'package:boneclinicmsu/unility/my_dialod.dart';
@@ -79,19 +78,7 @@ class _AuthenState extends State<Authen> {
                   String user = userController.text;
                   String password = passwordController.text;
                   print('## user = $user, password = $password');
-                  // checkAuthen(user: user, password: password);
-
-                  // SharedPreferences preferences =
-                  // await SharedPreferences.getInstance();
-                  // preferences.setString('type', type);
-                  // preferences.setString('user', model.user);
-
-                  //เชื่อมไปหน้าอื่น ๆ Navigator
-                  Navigator.pushNamed(
-                      //  context, MyConstant.routeCoustomerService);
-
-                      context,
-                      MyConstant.routeAdminService);
+                  checkAuthen(user: user, password: password);
                 }
               },
               child: Text('Login'),
@@ -104,17 +91,33 @@ class _AuthenState extends State<Authen> {
     String apiCheckAuthen =
         '${MyConstant.domain}/boneclinic/getUserWhereUser.php?isAdd=true&user=$user';
     await Dio().get(apiCheckAuthen).then((value) {
-      print('## value for API ==>> $value ');
+      print('## value for API ==>> $value');
       if (value.toString() == 'null') {
         MyDialog()
             .normalDialog(context, 'User False !!!', 'No $user in My Database');
       } else {
-        for (var item in json.decode(value.data)) {
+        for (var item in jsonDecode(value.data)) {
           UserModel model = UserModel.fromMap(item);
           if (password == model.password) {
             // Success Authen
-            //String type = model.password;
-            // print('## Authen Success in Type ==> type');
+            String role_id = model.role_id;
+            print('## Authen Success in Type ==> $role_id');
+            switch (role_id) {
+              case '1':
+                Navigator.pushNamedAndRemoveUntil(
+                    context, MyConstant.routeAdminService, (route) => false);
+                break;
+              case '2':
+                Navigator.pushNamedAndRemoveUntil(
+                    context, MyConstant.routeDoctorService, (route) => false);
+                break;
+              case '3':
+                Navigator.pushNamedAndRemoveUntil(context,
+                    MyConstant.routeCoustomerService, (route) => false);
+                break;
+
+              default:
+            }
           } else {
             // Authen False
             MyDialog().normalDialog(context, 'Password False !!!',
