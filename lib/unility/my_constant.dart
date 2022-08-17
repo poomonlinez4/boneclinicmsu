@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class MyConstant {
   // Genernal
   static String appName = 'Bone Clinic';
-  static String domain = 'https://cff1-14-207-202-19.ap.ngrok.io';
+  static String domain = 'https://311a-183-88-156-66.ap.ngrok.io';
 
   // Route
   static String routeAuthen = '/authen';
@@ -57,6 +57,21 @@ class MyConstant {
   TextStyle h2Whitestyle() => TextStyle(
         fontSize: 18,
         color: Colors.white,
+        fontWeight: FontWeight.w700,
+      );
+  TextStyle h2RedStyle() => TextStyle(
+        fontSize: 18,
+        color: Colors.red.shade700,
+        fontWeight: FontWeight.w700,
+      );
+  TextStyle h2GreenStyle() => TextStyle(
+        fontSize: 18,
+        color: Colors.green.shade800,
+        fontWeight: FontWeight.w700,
+      );
+  TextStyle h2BlueStyle() => TextStyle(
+        fontSize: 18,
+        color: Colors.blue.shade800,
         fontWeight: FontWeight.w700,
       );
 

@@ -21,7 +21,8 @@ class _ShowAllShopCustomerState extends State<ShowAllShopCustomer> {
   bool load = true;
   List<ProductModel> productModels = [];
   List<List<String>> ListImages = [];
-
+  int indexImage = 0;
+  int amountInt = 1;
   @override
   void initState() {
     super.initState();
@@ -45,7 +46,7 @@ class _ShowAllShopCustomerState extends State<ShowAllShopCustomer> {
         string = string.substring(1, string.length - 1);
         List<String> strings = string.split(',');
         int i = 0;
-        for (var element in strings) {
+        for (var item in strings) {
           strings[i] = item.trim();
           i++;
         }
@@ -143,20 +144,148 @@ class _ShowAllShopCustomerState extends State<ShowAllShopCustomer> {
   }
 
   Future<Null> showAlertDialog(
-      ProductModel productModel, List<String> images) async {
+      ProductModel productModel, List<String> pic_product) async {
     showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: ListTile(
-          leading: ShowImage(path: MyConstant.image2),
-          title: ShowTitle(
-              title: productModel.name_product,
-              textStyle: MyConstant().h2style()),
-          subtitle: ShowTitle(
-              title: ' Price = ${productModel.price_product} THB',
-              textStyle: MyConstant().h3style()),
-        ),
-      ),
-    );
+        context: context,
+        builder: (context) => StatefulBuilder(
+              builder: (context, setState) => AlertDialog(
+                title: ListTile(
+                  leading: ShowImage(path: MyConstant.image2),
+                  title: ShowTitle(
+                      title: productModel.name_product,
+                      textStyle: MyConstant().h2style()),
+                  subtitle: ShowTitle(
+                      title: 'ราคา  ${productModel.price_product} THB ',
+                      textStyle: MyConstant().h3style()),
+                ),
+                content: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CachedNetworkImage(
+                        imageUrl:
+                            '${MyConstant.domain}/boneclinic${pic_product[indexImage]}',
+                        placeholder: (context, url) => showProgress(),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  indexImage = 0;
+                                  print('### INDEXiMAGE = $indexImage');
+                                });
+                              },
+                              icon: Icon(Icons.filter_1),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  indexImage = 1;
+                                  print('### INDEXiMAGE = $indexImage');
+                                });
+                              },
+                              icon: Icon(Icons.filter_2),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  indexImage = 2;
+                                  print('### INDEXiMAGE = $indexImage');
+                                });
+                              },
+                              icon: Icon(Icons.filter_3),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  indexImage = 3;
+                                  print('### INDEXiMAGE = $indexImage');
+                                });
+                              },
+                              icon: Icon(Icons.filter_4),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          ShowTitle(
+                              title: 'รายละเอียด :',
+                              textStyle: MyConstant().h2style()),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 200,
+                              child: ShowTitle(
+                                  title: productModel.detail_product,
+                                  textStyle: MyConstant().h3style()),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              if (amountInt != 1) {
+                                setState(() {
+                                  amountInt--;
+                                });
+                              }
+                            },
+                            icon: Icon(
+                              Icons.remove_circle_outline,
+                              color: MyConstant.dark,
+                            ),
+                          ),
+                          ShowTitle(
+                              title: amountInt.toString(),
+                              textStyle: MyConstant().h1style()),
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                amountInt++;
+                              });
+                            },
+                            icon: Icon(Icons.add_circle_outline,
+                                color: MyConstant.dark),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                actions: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text(
+                          'Add Cart',
+                          style: MyConstant().h2BlueStyle(),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text(
+                          'Cancel',
+                          style: MyConstant().h2RedStyle(),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ));
   }
 }
