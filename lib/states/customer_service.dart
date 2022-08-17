@@ -18,7 +18,7 @@ class CustomerService extends StatefulWidget {
 class _CustomerServiceState extends State<CustomerService> {
   List<Widget> widgets = [
     ShowAllShopCustomer(),
-    ShowProductCustomer(),
+    // ShowProductCustomer(),
     MyMoneyCustomer(),
     MyOrderCustomer(),
   ];
@@ -30,6 +30,13 @@ class _CustomerServiceState extends State<CustomerService> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Bone Clinic ลูกค้า'),
+        actions: [
+          IconButton(
+            onPressed: () =>
+                Navigator.pushNamed(context, MyConstant.routeShowCart),
+            icon: Icon(Icons.shopping_cart_outlined),
+          )
+        ],
       ),
       drawer: Drawer(
         child: Stack(
@@ -38,7 +45,7 @@ class _CustomerServiceState extends State<CustomerService> {
               children: [
                 buildHeader(),
                 menuShowAllShop(),
-                menuShowAllProduct(),
+                //   menuShowAllProduct(),
                 menuMyMoney(),
                 menuMyOrder(),
               ],

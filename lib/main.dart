@@ -6,6 +6,7 @@ import 'package:boneclinicmsu/states/authen.dart';
 import 'package:boneclinicmsu/states/create_account.dart';
 import 'package:boneclinicmsu/states/customer_service.dart';
 import 'package:boneclinicmsu/states/doctor_service.dart';
+import 'package:boneclinicmsu/states/show_cart.dart';
 import 'package:boneclinicmsu/unility/my_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,6 +18,7 @@ final Map<String, WidgetBuilder> map = {
   '/doctorService': (BuildContext context) => DoctorService(),
   '/adminService': (BuildContext context) => AdminService(),
   '/addProduct': (BuildContext context) => AddProduct(),
+  '/showCart': (BuildContext context) => ShowCart(),
 };
 
 String? initlalRoute;

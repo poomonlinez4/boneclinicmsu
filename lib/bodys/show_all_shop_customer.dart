@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:ffi';
+import 'package:boneclinicmsu/models/sqlite_model.dart';
+import 'package:boneclinicmsu/unility/sqlite_helper.dart';
 import 'package:boneclinicmsu/widgets/show_image.dart';
 import 'package:boneclinicmsu/widgets/show_title.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -269,7 +271,29 @@ class _ShowAllShopCustomerState extends State<ShowAllShopCustomer> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       TextButton(
-                        onPressed: () => Navigator.pop(context),
+                        onPressed: () async {
+                          String idProduct = productModel.product_id;
+                          String name = productModel.name_product;
+                          String price = productModel.price_product;
+                          String amount = amountInt.toString();
+
+                          double sumInt = double.parse(price) * amountInt;
+                          String sum = sumInt.toString();
+                          print(
+                              '### ==>> idProduct = $idProduct, name = $name, price = $price, amount = $amount, sum = $sum');
+                          SQLiteModel sqLiteModel = SQLiteModel(
+                              idProduct: idProduct,
+                              name: name,
+                              price: price,
+                              amount: amount,
+                              sum: sum);
+                          await SQLiteHelper()
+                              .insertValueToSQLite(sqLiteModel)
+                              .then((value) {
+                            amountInt = 1;
+                            Navigator.pop(context);
+                          });
+                        },
                         child: Text(
                           'Add Cart',
                           style: MyConstant().h2BlueStyle(),
