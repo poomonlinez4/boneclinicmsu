@@ -1,6 +1,7 @@
 import 'package:boneclinicmsu/models/sqlite_model.dart';
 import 'package:boneclinicmsu/unility/my_constant.dart';
 import 'package:boneclinicmsu/unility/sqlite_helper.dart';
+import 'package:boneclinicmsu/widgets/show_image.dart';
 import 'package:boneclinicmsu/widgets/show_progress.dart';
 import 'package:boneclinicmsu/widgets/show_title.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +41,7 @@ class _ShowCartState extends State<ShowCart> {
   }
 
   void calculateTotal() async {
-    total = 5;
+    total = 0;
     for (var item in sqliteModels) {
       double sumInt = double.parse(item.sum.trim());
       setState(() {
@@ -57,21 +58,98 @@ class _ShowCartState extends State<ShowCart> {
       ),
       body: load
           ? showProgress()
-          : Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ShowTitle(
-                      title: 'รายการสั่งซื้อทั้งหมด',
-                      textStyle: MyConstant().h1style()),
-                ),
-                buildHead(),
-                listProduct(),
-                buildDivider(),
-                buildTotal()
-              ],
-            ),
+          : sqliteModels.isEmpty
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.symmetric(vertical: 16),
+                        width: 200,
+                        child: ShowImage(
+                          path: MyConstant.image4,
+                        ),
+                      ),
+                      ShowTitle(
+                        title: 'ไม่มี รายการสั่งซื้อสินค้า',
+                        textStyle: MyConstant().h1style(),
+                      ),
+                    ],
+                  ),
+                )
+              : buildContent(),
+    );
+  }
+
+  Column buildContent() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ShowTitle(
+              title: 'รายการสั่งซื้อทั้งหมด',
+              textStyle: MyConstant().h1style()),
+        ),
+        buildHead(),
+        listProduct(),
+        buildDivider(),
+        buildTotal(),
+        buildDivider(),
+        buttonController()
+      ],
+    );
+  }
+
+  Future<void> confirmEmptyCart() async {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: ListTile(
+          leading: ShowImage(path: MyConstant.image8),
+          title: ShowTitle(
+              title: 'คุณต้องการจะ ลบ ?', textStyle: MyConstant().h2style()),
+          subtitle: ShowTitle(
+              title: 'สินค้า ทั้งหมด ใน ตะกร้า',
+              textStyle: MyConstant().h3style()),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () async {
+              await SQLiteHelper().emptySQLite().then((value) {
+                Navigator.pop(context);
+                processReadSQLite();
+              });
+            },
+            child: Text('Delete'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('Cancel'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Row buttonController() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        ElevatedButton(
+          onPressed: () {
+            Navigator.pushNamed(context, MyConstant.routeAddWallet);
+          },
+          child: Text('Order'),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 4, right: 8),
+          child: ElevatedButton(
+            onPressed: () => confirmEmptyCart(),
+            child: Text('ลบสินค้าทั้งหมด'),
+          ),
+        ),
+      ],
     );
   }
 

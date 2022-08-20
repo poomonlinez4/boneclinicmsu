@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:boneclinicmsu/states/add_product.dart';
+import 'package:boneclinicmsu/states/add_wallet.dart';
 import 'package:boneclinicmsu/states/admin_service.dart';
 import 'package:boneclinicmsu/states/authen.dart';
 import 'package:boneclinicmsu/states/create_account.dart';
@@ -19,6 +20,7 @@ final Map<String, WidgetBuilder> map = {
   '/adminService': (BuildContext context) => AdminService(),
   '/addProduct': (BuildContext context) => AddProduct(),
   '/showCart': (BuildContext context) => ShowCart(),
+  '/addWallet': (BuildContext context) => AddWallet(),
 };
 
 String? initlalRoute;
