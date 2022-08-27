@@ -140,7 +140,7 @@ class _ShowCartState extends State<ShowCart> {
           onPressed: () {
             Navigator.pushNamed(context, MyConstant.routeAddWallet);
           },
-          child: Text('Order'),
+          child: Text('ชำระเงิน'),
         ),
         Container(
           margin: EdgeInsets.only(left: 4, right: 8),

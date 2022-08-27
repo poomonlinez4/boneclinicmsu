@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 class MyConstant {
   // Genernal
   static String appName = 'Bone Clinic';
-  static String domain = 'https://7a66-184-82-51-44.ap.ngrok.io';
+  static String domain = 'https://36d8-184-82-32-185.ap.ngrok.io';
   static String urlPrompay = 'https://promptpay.io/0922698037.png';
+  static String publicKey = 'pkey_test_5svsm90kpsw24gjh0ce';
+  static String secreKey = 'skey_test_5svsm920ezn9s0oyq2o';
 
   // Route
   static String routeAuthen = '/authen';
@@ -15,6 +17,7 @@ class MyConstant {
   static String routeAddProduct = '/addProduct';
   static String routeShowCart = '/showCart';
   static String routeAddWallet = '/addWallet';
+  static String routeConfirmAddWallet = '/confirmAddWallet';
 
   // Image
   static String image1 = 'images/image (1).png';

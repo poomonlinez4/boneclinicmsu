@@ -1,5 +1,6 @@
 import 'package:boneclinicmsu/unility/my_constant.dart';
 import 'package:boneclinicmsu/unility/my_dialod.dart';
+import 'package:boneclinicmsu/widgets/nav_confirm_add_wallet.dart';
 import 'package:boneclinicmsu/widgets/show_progress.dart';
 import 'package:boneclinicmsu/widgets/show_title.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -30,6 +31,7 @@ class _PrompayState extends State<Prompay> {
           ],
         ),
       ),
+      floatingActionButton: NavConfirmAddWallet(),
     );
   }
 

@@ -4,6 +4,7 @@ import 'package:boneclinicmsu/states/add_product.dart';
 import 'package:boneclinicmsu/states/add_wallet.dart';
 import 'package:boneclinicmsu/states/admin_service.dart';
 import 'package:boneclinicmsu/states/authen.dart';
+import 'package:boneclinicmsu/states/confirm_add_wallet.dart';
 import 'package:boneclinicmsu/states/create_account.dart';
 import 'package:boneclinicmsu/states/customer_service.dart';
 import 'package:boneclinicmsu/states/doctor_service.dart';
@@ -21,6 +22,7 @@ final Map<String, WidgetBuilder> map = {
   '/addProduct': (BuildContext context) => AddProduct(),
   '/showCart': (BuildContext context) => ShowCart(),
   '/addWallet': (BuildContext context) => AddWallet(),
+  '/confirmAddWallet': (BuildContext context) => ConfirmAddWallet(),
 };
 
 String? initlalRoute;

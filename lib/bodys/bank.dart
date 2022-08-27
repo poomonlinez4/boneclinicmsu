@@ -1,4 +1,5 @@
 import 'package:boneclinicmsu/unility/my_constant.dart';
+import 'package:boneclinicmsu/widgets/nav_confirm_add_wallet.dart';
 import 'package:boneclinicmsu/widgets/show_title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -17,6 +18,7 @@ class _BankState extends State<Bank> {
       body: Column(
         children: [buildTitle(), buildSCBbank(), builKrungthaibank()],
       ),
+      floatingActionButton: NavConfirmAddWallet(),
     );
   }
 
