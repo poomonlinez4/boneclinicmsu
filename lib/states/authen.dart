@@ -90,7 +90,7 @@ class _AuthenState extends State<Authen> {
   Future<Null> checkAuthen({String? user, String? password}) async {
     String apiCheckAuthen =
         '${MyConstant.domain}/boneclinic/getUserWhereUser.php?isAdd=true&user=$user';
-    await Dio().get(apiCheckAuthen).then((value) {
+    await Dio().get(apiCheckAuthen).then((value) async {
       print('## value for API ==>> $value');
       if (value.toString() == 'null') {
         MyDialog()
@@ -102,6 +102,13 @@ class _AuthenState extends State<Authen> {
             // Success Authen
             String role_id = model.role_id;
             print('## Authen Success in Type ==> $role_id');
+
+            SharedPreferences preferences =
+                await SharedPreferences.getInstance();
+            preferences.setString('id', model.members_id);
+            preferences.setString('type', role_id);
+            preferences.setString('user', model.user);
+            preferences.setString('name', model.name);
             switch (role_id) {
               case '1':
                 Navigator.pushNamedAndRemoveUntil(

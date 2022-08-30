@@ -40,7 +40,15 @@ Future<Null> main() async {
     runApp(MyApp());
   } else {
     switch (type) {
-      case 'customer':
+      case '1':
+        initlalRoute = MyConstant.routeAdminService;
+        runApp(MyApp());
+        break;
+      case '2':
+        initlalRoute = MyConstant.routeDoctorService;
+        runApp(MyApp());
+        break;
+      case '3':
         initlalRoute = MyConstant.routeCoustomerService;
         runApp(MyApp());
         break;
