@@ -67,53 +67,56 @@ class _ShowAllShopCustomerState extends State<ShowAllShopCustomer> {
     return Scaffold(
       body: load
           ? showProgress()
-          : GridView.builder(
-              itemCount: productModels.length,
-              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                  childAspectRatio: 2 / 3, maxCrossAxisExtent: 180),
-              itemBuilder: (context, index) => GestureDetector(
-                onTap: () {
-                  print('### You Click Index ==>> $index');
-                  showAlertDialog(
-                    productModels[index],
-                    ListImages[index],
-                  );
-                },
-                child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Container(
-                          width: 180,
-                          height: 180,
-                          child: CachedNetworkImage(
-                            errorWidget: (context, url, error) =>
-                                ShowImage(path: MyConstant.image9),
-                            placeholder: (context, url) => showProgress(),
-                            fit: BoxFit.cover,
-                            imageUrl:
-                                findUrlImage(productModels[index].pic_product),
+          : Container(
+              decoration: MyConstant().planBackground(),
+              child: GridView.builder(
+                itemCount: productModels.length,
+                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                    childAspectRatio: 2 / 3, maxCrossAxisExtent: 180),
+                itemBuilder: (context, index) => GestureDetector(
+                  onTap: () {
+                    print('### You Click Index ==>> $index');
+                    showAlertDialog(
+                      productModels[index],
+                      ListImages[index],
+                    );
+                  },
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Container(
+                            width: 180,
+                            height: 180,
+                            child: CachedNetworkImage(
+                              errorWidget: (context, url, error) =>
+                                  ShowImage(path: MyConstant.image9),
+                              placeholder: (context, url) => showProgress(),
+                              fit: BoxFit.cover,
+                              imageUrl: findUrlImage(
+                                  productModels[index].pic_product),
+                            ),
                           ),
-                        ),
-                        Column(
-                          children: [
-                            ShowTitle(
-                                title:
-                                    cutWord(productModels[index].name_product),
-                                textStyle: MyConstant().h2style()),
-                            ShowTitle(
-                                title: cutWord(
-                                    ' ${productModels[index].price_product} THB'),
-                                textStyle: MyConstant().h3style()),
-                            ShowTitle(
-                                title: cutWord(
-                                    productModels[index].detail_product),
-                                textStyle: MyConstant().h3style()),
-                          ],
-                        ),
-                      ],
+                          Column(
+                            children: [
+                              ShowTitle(
+                                  title: cutWord(
+                                      productModels[index].name_product),
+                                  textStyle: MyConstant().h2style()),
+                              ShowTitle(
+                                  title: cutWord(
+                                      ' ${productModels[index].price_product} THB'),
+                                  textStyle: MyConstant().h3style()),
+                              ShowTitle(
+                                  title: cutWord(
+                                      productModels[index].detail_product),
+                                  textStyle: MyConstant().h3style()),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

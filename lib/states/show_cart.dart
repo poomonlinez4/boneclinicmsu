@@ -59,45 +59,51 @@ class _ShowCartState extends State<ShowCart> {
       body: load
           ? showProgress()
           : sqliteModels.isEmpty
-              ? Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.symmetric(vertical: 16),
-                        width: 200,
-                        child: ShowImage(
-                          path: MyConstant.image4,
+              ? Container(
+                  // decoration: MyConstant().gradintLinearBackground(),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.symmetric(vertical: 16),
+                          width: 200,
+                          child: ShowImage(
+                            path: MyConstant.image4,
+                          ),
                         ),
-                      ),
-                      ShowTitle(
-                        title: 'ไม่มี รายการสั่งซื้อสินค้า',
-                        textStyle: MyConstant().h1style(),
-                      ),
-                    ],
+                        ShowTitle(
+                          title: 'ไม่มี รายการสั่งซื้อสินค้า',
+                          textStyle: MyConstant().h1style(),
+                        ),
+                      ],
+                    ),
                   ),
                 )
               : buildContent(),
     );
   }
 
-  Column buildContent() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ShowTitle(
-              title: 'รายการสั่งซื้อทั้งหมด',
-              textStyle: MyConstant().h1style()),
-        ),
-        buildHead(),
-        listProduct(),
-        buildDivider(),
-        buildTotal(),
-        buildDivider(),
-        buttonController()
-      ],
+  Container buildContent() {
+    return Container(
+      //   decoration: MyConstant().gradintLinearBackground(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ShowTitle(
+                title: 'รายการสั่งซื้อทั้งหมด',
+                textStyle: MyConstant().h1style()),
+          ),
+          buildHead(),
+          listProduct(),
+          buildDivider(),
+          buildTotal(),
+          buildDivider(),
+          buttonController()
+        ],
+      ),
     );
   }
 

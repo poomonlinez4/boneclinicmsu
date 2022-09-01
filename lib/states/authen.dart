@@ -32,6 +32,7 @@ class _AuthenState extends State<Authen> {
           child: Form(
             key: formKey,
             child: ListView(
+              // decoration: MyConstant().gradintLinearBackground(), **เอาใส่ไว้ใน CONTAINER จะปรับสี Background ได้
               children: [
                 builImage(size),
                 buildAppName(),
