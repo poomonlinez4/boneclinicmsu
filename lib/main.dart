@@ -28,6 +28,8 @@ final Map<String, WidgetBuilder> map = {
 String? initlalRoute;
 
 Future<Null> main() async {
+  HttpOverrides.global = MyHttpOverrides();
+
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences preferences = await SharedPreferences.getInstance();
 
@@ -80,5 +82,14 @@ class MyApp extends StatelessWidget {
         routes: map,
         initialRoute: initlalRoute,
         theme: ThemeData(primarySwatch: materialColor));
+  }
+}
+
+class MyhttpOverride extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    // TODO: implement createHttpClient
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (cert, host, port) => true;
   }
 }

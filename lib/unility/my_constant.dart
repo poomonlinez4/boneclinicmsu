@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class MyConstant {
   // Genernal
   static String appName = 'Bone Clinic';
-  static String domain = 'https://76d6-184-82-55-180.ap.ngrok.io';
+  static String domain = 'https://2d29-27-130-115-171.ap.ngrok.io';
   static String urlPrompay = 'https://promptpay.io/0922698037.png';
   static String publicKey = 'pkey_test_5svsm90kpsw24gjh0ce';
   static String secreKey = 'skey_test_5svsm920ezn9s0oyq2o';
@@ -49,7 +49,9 @@ class MyConstant {
   };
 
   //Background
-  BoxDecoration planBackground() => BoxDecoration(color: MyConstant.light);
+  BoxDecoration planBackground() => BoxDecoration(color: Colors.black12);
+  BoxDecoration planBackgroundLight() => BoxDecoration(color: MyConstant.light);
+
   BoxDecoration planBackgroundPrimary() =>
       BoxDecoration(color: MyConstant.primary);
   BoxDecoration planBackgroundDark() => BoxDecoration(color: MyConstant.dark);
@@ -74,6 +76,18 @@ class MyConstant {
   TextStyle h1style() => TextStyle(
         fontSize: 24,
         color: dark,
+        fontWeight: FontWeight.bold,
+      );
+
+  TextStyle h1Whitestyle() => TextStyle(
+        fontSize: 24,
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+      );
+
+  TextStyle h1Redstyle() => TextStyle(
+        fontSize: 24,
+        color: Colors.red,
         fontWeight: FontWeight.bold,
       );
   TextStyle h2style() => TextStyle(

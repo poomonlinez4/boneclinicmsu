@@ -6,6 +6,7 @@ import 'package:boneclinicmsu/bodys/show_all_shop_customer.dart';
 import 'package:boneclinicmsu/models/user_model.dart';
 import 'package:boneclinicmsu/states/show_product_customer.dart';
 import 'package:boneclinicmsu/unility/my_constant.dart';
+import 'package:boneclinicmsu/unility/my_dialod.dart';
 import 'package:boneclinicmsu/widgets/show_image.dart';
 import 'package:boneclinicmsu/widgets/show_progress.dart';
 import 'package:boneclinicmsu/widgets/show_signout.dart';
@@ -44,14 +45,30 @@ class _CustomerServiceState extends State<CustomerService> {
     var idUserLogin = preferences.getString('id');
     var urlAPI =
         '${MyConstant.domain}/boneclinic/getUserWhereid.php?isAdd=true&members_id=$idUserLogin';
-    await Dio().get(urlAPI).then((value) {
+    await Dio().get(urlAPI).then((value) async {
       for (var item in json.decode(value.data)) {
         // print('item ==>> $item');
         setState(() {
           userModel = UserModel.fromMap(item);
-          print('name ==> ${userModel!.name}');
+          print('### id login ==> ${userModel!.members_id}');
         });
       }
+
+      var path =
+          '${MyConstant.domain}/boneclinic/getWalletWhereIdBuyer.php?isAdd=true&idBuyer=${userModel!.members_id}';
+      await Dio().get(path).then((value) {
+        print('### value getWalletWhereId ==> $value');
+
+        if (value.toString() == 'null') {
+          print('#### action Alert add Wallet');
+          MyDialog(
+            funcAction: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, MyConstant.routeAddWallet);
+            },
+          ).actionDialog(context, 'No Wallet', 'Please Add Wallet');
+        }
+      });
     });
   }
 

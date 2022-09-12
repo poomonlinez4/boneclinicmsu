@@ -48,14 +48,23 @@ class MyDialog {
   ) async {
     showDialog(
       context: context,
-      builder: (context) => SimpleDialog(
+      builder: (context) => AlertDialog(
         title: ListTile(
           leading: ShowImage(path: MyConstant.image4),
           title: ShowTitle(title: title, textStyle: MyConstant().h2style()),
           subtitle:
               ShowTitle(title: messagde, textStyle: MyConstant().h3style()),
         ),
-        children: [TextButton(onPressed: funcAction, child: Text('OK'))],
+        actions: [
+          TextButton(
+            onPressed: funcAction,
+            child: Text('OK'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('Cancel'),
+          ),
+        ],
       ),
     );
   }

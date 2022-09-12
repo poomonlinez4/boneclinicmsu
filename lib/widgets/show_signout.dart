@@ -1,4 +1,5 @@
 import 'package:boneclinicmsu/unility/my_constant.dart';
+import 'package:boneclinicmsu/unility/sqlite_helper.dart';
 import 'package:boneclinicmsu/widgets/show_title.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,6 +16,8 @@ class ShowSignOut extends StatelessWidget {
           onTap: () async {
             SharedPreferences preferences =
                 await SharedPreferences.getInstance();
+
+            SQLiteHelper().emptySQLite();
             preferences.clear().then(
                   (value) => Navigator.pushNamedAndRemoveUntil(
                       context, MyConstant.routeAuthen, (route) => false),

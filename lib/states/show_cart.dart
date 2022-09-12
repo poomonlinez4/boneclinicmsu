@@ -1,10 +1,18 @@
+import 'dart:convert';
+
 import 'package:boneclinicmsu/models/sqlite_model.dart';
+import 'package:boneclinicmsu/models/user_model.dart';
+import 'package:boneclinicmsu/models/wallet_model.dart';
 import 'package:boneclinicmsu/unility/my_constant.dart';
+import 'package:boneclinicmsu/unility/my_dialod.dart';
 import 'package:boneclinicmsu/unility/sqlite_helper.dart';
 import 'package:boneclinicmsu/widgets/show_image.dart';
+import 'package:boneclinicmsu/widgets/show_no_data.dart';
 import 'package:boneclinicmsu/widgets/show_progress.dart';
 import 'package:boneclinicmsu/widgets/show_title.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ShowCart extends StatefulWidget {
   const ShowCart({Key? key}) : super(key: key);
@@ -17,6 +25,7 @@ class _ShowCartState extends State<ShowCart> {
   List<SQLiteModel> sqliteModels = [];
   bool load = true;
   double? total = 0;
+  UserModel? userModel;
 
   @override
   void initState() {
@@ -61,23 +70,9 @@ class _ShowCartState extends State<ShowCart> {
           : sqliteModels.isEmpty
               ? Container(
                   // decoration: MyConstant().gradintLinearBackground(),
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.symmetric(vertical: 16),
-                          width: 200,
-                          child: ShowImage(
-                            path: MyConstant.image4,
-                          ),
-                        ),
-                        ShowTitle(
-                          title: 'ไม่มี รายการสั่งซื้อสินค้า',
-                          textStyle: MyConstant().h1style(),
-                        ),
-                      ],
-                    ),
+                  child: ShowNoData(
+                    title: 'ไม่มี รายการสั่งซื้อสินค้า',
+                    pathImage: MyConstant.image4,
                   ),
                 )
               : buildContent(),
@@ -143,8 +138,48 @@ class _ShowCartState extends State<ShowCart> {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         ElevatedButton(
-          onPressed: () {
-            Navigator.pushNamed(context, MyConstant.routeAddWallet);
+          onPressed: () async {
+            MyDialog().showProgressDialog(context);
+
+            SharedPreferences preferences =
+                await SharedPreferences.getInstance();
+            String idBuyer = preferences.getString('id')!;
+
+            var path =
+                '${MyConstant.domain}/boneclinic/getWalletWhereIdBuyer.php?isAdd=true&idBuyer=$idBuyer';
+            await Dio().get(path).then((value) {
+              Navigator.pop(context);
+              print('#### $value');
+              if (value.toString() == 'null') {
+                print('#### action Alert add Wallet');
+                MyDialog(
+                  funcAction: () {
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, MyConstant.routeAddWallet);
+                  },
+                ).actionDialog(context, 'No Wallet', 'Please Add Wallet');
+              } else {
+                print('### check Wallet can Payment');
+
+                double approveWallet = 0;
+
+                for (var item in json.decode(value.data)) {
+                  WalletModel walletModel = WalletModel.fromMap(item);
+                  if (walletModel.status == 'Approve') {
+                    approveWallet =
+                        approveWallet + double.parse(walletModel.money.trim());
+                  }
+                }
+                print('#12feb approveWallet ==> $approveWallet');
+                if (approveWallet - total! >= 0) {
+                  print('#12feb Can Order');
+                } else {
+                  print('#12feb Cannot Order');
+                  MyDialog().normalDialog(context, 'ไม่สามารถซื้อได้ ?',
+                      'จำนวนเงินที่มีอยู่ : $approveWallet  บาท\nจำนวนงินที่ต้องจ่าย: \n$totalบาท');
+                }
+              }
+            });
           },
           child: Text('ชำระเงิน'),
         ),
