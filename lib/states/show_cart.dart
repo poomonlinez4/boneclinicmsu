@@ -170,9 +170,13 @@ class _ShowCartState extends State<ShowCart> {
                         approveWallet + double.parse(walletModel.money.trim());
                   }
                 }
-                print('#12feb approveWallet ==> $approveWallet');
+                print('#12feb approveWallet ==> $approveWallet บาท');
                 if (approveWallet - total! >= 0) {
                   print('#12feb Can Order');
+                  MyDialog(funcAction: orderfunc).actionDialog(
+                      context,
+                      'Confirm Order',
+                      'ราคารวมทั้งหมด : $total THB \n ยืนยันคำสั่งซื้อของท่าน');
                 } else {
                   print('#12feb Cannot Order');
                   MyDialog().normalDialog(context, 'ไม่สามารถซื้อได้ ?',
@@ -336,5 +340,10 @@ class _ShowCartState extends State<ShowCart> {
         ),
       ),
     );
+  }
+
+  Future<void> orderfunc() async {
+    Navigator.pop(context);
+    print('orderFucn work');
   }
 }

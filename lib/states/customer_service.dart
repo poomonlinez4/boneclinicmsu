@@ -4,7 +4,8 @@ import 'package:boneclinicmsu/bodys/my_money_customer.dart';
 import 'package:boneclinicmsu/bodys/my_order_customer.dart';
 import 'package:boneclinicmsu/bodys/show_all_shop_customer.dart';
 import 'package:boneclinicmsu/models/user_model.dart';
-import 'package:boneclinicmsu/states/show_product_customer.dart';
+import 'package:boneclinicmsu/states/add_wallet.dart';
+import 'package:boneclinicmsu/states/show_course_customer.dart';
 import 'package:boneclinicmsu/unility/my_constant.dart';
 import 'package:boneclinicmsu/unility/my_dialod.dart';
 import 'package:boneclinicmsu/widgets/show_image.dart';
@@ -26,8 +27,9 @@ class CustomerService extends StatefulWidget {
 class _CustomerServiceState extends State<CustomerService> {
   List<Widget> widgets = [
     ShowAllShopCustomer(),
-    // ShowProductCustomer(),
+    ShowCourse(),
     MyMoneyCustomer(),
+    AddWallet(),
     MyOrderCustomer(),
   ];
 
@@ -91,9 +93,10 @@ class _CustomerServiceState extends State<CustomerService> {
             Column(
               children: [
                 buildHeader(),
-                menuShowAllShop(),
-                //   menuShowAllProduct(),
+                menuShowAllProduct(),
+                menuShowAllCourse(),
                 menuMyMoney(),
+                menuAddWallet(),
                 menuMyOrder(),
               ],
             ),
@@ -102,27 +105,6 @@ class _CustomerServiceState extends State<CustomerService> {
         ),
       ),
       body: widgets[indexWidget],
-    );
-  }
-
-  ListTile menuShowAllShop() {
-    return ListTile(
-      leading:
-          Icon(Icons.shopping_bag_outlined, size: 36, color: MyConstant.dark),
-      title: ShowTitle(
-        title: 'Show All shop',
-        textStyle: MyConstant().h2style(),
-      ),
-      subtitle: ShowTitle(
-        title: 'แสดงร้านค้า ทั้งหมด',
-        textStyle: MyConstant().h3style(),
-      ),
-      onTap: () {
-        setState(() {
-          indexWidget = 0;
-          Navigator.pop(context);
-        });
-      },
     );
   }
 
@@ -147,6 +129,27 @@ class _CustomerServiceState extends State<CustomerService> {
     );
   }
 
+  ListTile menuShowAllCourse() {
+    return ListTile(
+      leading:
+          Icon(Icons.shopping_bag_outlined, size: 36, color: MyConstant.dark),
+      title: ShowTitle(
+        title: 'Show All course',
+        textStyle: MyConstant().h2style(),
+      ),
+      subtitle: ShowTitle(
+        title: 'แสดงคอร์ส ทั้งหมด',
+        textStyle: MyConstant().h3style(),
+      ),
+      onTap: () {
+        setState(() {
+          indexWidget = 1;
+          Navigator.pop(context);
+        });
+      },
+    );
+  }
+
   ListTile menuMyMoney() {
     return ListTile(
       leading: Icon(Icons.money, size: 36, color: MyConstant.dark),
@@ -160,8 +163,28 @@ class _CustomerServiceState extends State<CustomerService> {
       ),
       onTap: () {
         setState(() {
-          indexWidget = 1;
+          indexWidget = 2;
           Navigator.pop(context);
+        });
+      },
+    );
+  }
+
+  ListTile menuAddWallet() {
+    return ListTile(
+      leading: Icon(Icons.wallet_travel, size: 36, color: MyConstant.dark),
+      title: ShowTitle(
+        title: 'Add Wallet',
+        textStyle: MyConstant().h2style(),
+      ),
+      subtitle: ShowTitle(
+        title: 'เติมเงิน กระเป๋าตัง',
+        textStyle: MyConstant().h3style(),
+      ),
+      onTap: () {
+        setState(() {
+          // indexWidget = 3;
+          Navigator.pushNamed(context, MyConstant.routeAddWallet);
         });
       },
     );
@@ -181,13 +204,14 @@ class _CustomerServiceState extends State<CustomerService> {
       ),
       onTap: () {
         setState(() {
-          indexWidget = 2;
+          indexWidget = 4;
           Navigator.pop(context);
         });
       },
     );
   }
-  // ListTile menuShowAllShop() {
+
+  // ListTile menuShowAllProduct() {
   //   return ListTile(
   //     leading:
   //         Icon(Icons.shopping_bag_outlined, size: 36, color: MyConstant.dark),
