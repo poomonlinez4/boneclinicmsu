@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:boneclinicmsu/bodys/home_chat.dart';
 import 'package:boneclinicmsu/states/add_product.dart';
+import 'package:boneclinicmsu/states/add_tabledatetime_doctor.dart';
 import 'package:boneclinicmsu/states/add_wallet.dart';
 import 'package:boneclinicmsu/states/admin_service.dart';
 import 'package:boneclinicmsu/states/authen.dart';
@@ -23,6 +25,8 @@ final Map<String, WidgetBuilder> map = {
   '/showCart': (BuildContext context) => ShowCart(),
   '/addWallet': (BuildContext context) => AddWallet(),
   '/confirmAddWallet': (BuildContext context) => ConfirmAddWallet(),
+  '/addTableDatetime': (BuildContext context) => AddTableDateTime(),
+  '/homeChat': (BuildContext context) => HomeChat(),
 };
 
 String? initlalRoute;

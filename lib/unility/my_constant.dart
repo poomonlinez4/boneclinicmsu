@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class MyConstant {
   // Genernal
   static String appName = 'Bone Clinic';
-  static String domain = 'https://d301-180-183-68-165.ap.ngrok.io';
+  static String domain = 'https://4145-27-130-116-236.ap.ngrok.io';
   static String urlPrompay = 'https://promptpay.io/0922698037.png';
   static String publicKey = 'pkey_test_5svsm90kpsw24gjh0ce';
   static String secreKey = 'skey_test_5svsm920ezn9s0oyq2o';
@@ -18,6 +18,9 @@ class MyConstant {
   static String routeShowCart = '/showCart';
   static String routeAddWallet = '/addWallet';
   static String routeConfirmAddWallet = '/confirmAddWallet';
+  static String routeHomeChat = '/homeChat';
+
+  static String routeAddTableDateTime = '/addTableDatetime';
 
   // Image
   static String image1 = 'images/image (1).png';
@@ -30,6 +33,7 @@ class MyConstant {
   static String image8 = 'images/image (8).png';
   static String image9 = 'images/image 9.png';
   static String avatar = 'images/avatar.png';
+  static String HotDeal02 = 'images/HotDeal02.jpg';
 
   //Color
   static Color primary = Color(0xffef9a9a);
@@ -136,6 +140,11 @@ class MyConstant {
 
   ButtonStyle myButtonStyle2() => ElevatedButton.styleFrom(
         primary: MyConstant.dark,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+      );
+
+  ButtonStyle myButtonStyleBack() => ElevatedButton.styleFrom(
+        primary: Colors.black,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
       );
 }

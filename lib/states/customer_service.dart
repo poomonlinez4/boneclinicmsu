@@ -80,10 +80,19 @@ class _CustomerServiceState extends State<CustomerService> {
       appBar: AppBar(
         title: Text('Bone Clinic ลูกค้า'),
         actions: [
-          IconButton(
-            onPressed: () =>
-                Navigator.pushNamed(context, MyConstant.routeShowCart),
-            icon: Icon(Icons.shopping_cart_outlined),
+          Row(
+            children: [
+              IconButton(
+                onPressed: () =>
+                    Navigator.pushNamed(context, MyConstant.routeShowCart),
+                icon: Icon(Icons.shopping_cart_outlined),
+              ),
+              IconButton(
+                onPressed: () =>
+                    Navigator.pushNamed(context, MyConstant.routeHomeChat),
+                icon: Icon(Icons.chat),
+              )
+            ],
           )
         ],
       ),
