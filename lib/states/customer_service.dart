@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:boneclinicmsu/bodys/my_money_customer.dart';
 import 'package:boneclinicmsu/bodys/my_order_customer.dart';
 import 'package:boneclinicmsu/bodys/show_all_shop_customer.dart';
+import 'package:boneclinicmsu/bodys/show_doctor.dart';
+import 'package:boneclinicmsu/bodys/show_profile.dart';
 import 'package:boneclinicmsu/models/user_model.dart';
 import 'package:boneclinicmsu/states/add_wallet.dart';
 import 'package:boneclinicmsu/states/show_course_customer.dart';
@@ -31,6 +33,7 @@ class _CustomerServiceState extends State<CustomerService> {
     MyMoneyCustomer(),
     AddWallet(),
     MyOrderCustomer(),
+    ShowDoctor()
   ];
 
   int indexWidget = 0;
@@ -53,6 +56,8 @@ class _CustomerServiceState extends State<CustomerService> {
         setState(() {
           userModel = UserModel.fromMap(item);
           print('### id login ==> ${userModel!.members_id}');
+
+          //  widgets.add(ShowProfile(userModel: userModel!));
         });
       }
 
@@ -99,15 +104,18 @@ class _CustomerServiceState extends State<CustomerService> {
       drawer: Drawer(
         child: Stack(
           children: [
-            Column(
-              children: [
-                buildHeader(),
-                menuShowAllProduct(),
-                menuShowAllCourse(),
-                menuMyMoney(),
-                menuAddWallet(),
-                menuMyOrder(),
-              ],
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  buildHeader(),
+                  menuShowAllProduct(),
+                  menuShowAllCourse(),
+                  menuMyMoney(),
+                  menuAddWallet(),
+                  //   menuMyOrder(),
+                  menuShowDoctor(),
+                ],
+              ),
             ),
             ShowSignOut(),
           ],
@@ -122,7 +130,7 @@ class _CustomerServiceState extends State<CustomerService> {
       leading:
           Icon(Icons.shopping_bag_outlined, size: 36, color: MyConstant.dark),
       title: ShowTitle(
-        title: 'Show All Product',
+        title: 'สินค้า',
         textStyle: MyConstant().h2style(),
       ),
       subtitle: ShowTitle(
@@ -143,7 +151,7 @@ class _CustomerServiceState extends State<CustomerService> {
       leading:
           Icon(Icons.shopping_bag_outlined, size: 36, color: MyConstant.dark),
       title: ShowTitle(
-        title: 'Show All course',
+        title: 'จองคอร์ส',
         textStyle: MyConstant().h2style(),
       ),
       subtitle: ShowTitle(
@@ -163,7 +171,7 @@ class _CustomerServiceState extends State<CustomerService> {
     return ListTile(
       leading: Icon(Icons.money, size: 36, color: MyConstant.dark),
       title: ShowTitle(
-        title: 'My Money',
+        title: 'กระเป๋าเงิน ',
         textStyle: MyConstant().h2style(),
       ),
       subtitle: ShowTitle(
@@ -183,7 +191,7 @@ class _CustomerServiceState extends State<CustomerService> {
     return ListTile(
       leading: Icon(Icons.wallet_travel, size: 36, color: MyConstant.dark),
       title: ShowTitle(
-        title: 'Add Wallet',
+        title: 'เติมเงิน',
         textStyle: MyConstant().h2style(),
       ),
       subtitle: ShowTitle(
@@ -220,6 +228,27 @@ class _CustomerServiceState extends State<CustomerService> {
     );
   }
 
+  ListTile menuShowDoctor() {
+    return ListTile(
+      leading:
+          Icon(Icons.library_books_rounded, size: 36, color: MyConstant.dark),
+      title: ShowTitle(
+        title: 'ปรึกษาเพทย์',
+        textStyle: MyConstant().h2style(),
+      ),
+      subtitle: ShowTitle(
+        title: 'แสดงรายชื่อหมอ',
+        textStyle: MyConstant().h3style(),
+      ),
+      onTap: () {
+        setState(() {
+          //   indexWidget = 5;
+          Navigator.pushNamed(context, MyConstant.routeDoctor);
+        });
+      },
+    );
+  }
+
   // ListTile menuShowAllProduct() {
   //   return ListTile(
   //     leading:
@@ -238,23 +267,58 @@ class _CustomerServiceState extends State<CustomerService> {
   //   );
   // }
 
+  Future<Null> refreshUserModel() async {
+    print('## refreshUserModel Work');
+    String apiGetUserWhereId =
+        '${MyConstant.domain}/boneclinic/getUserWhereid.php?isAdd=true&members_id=${userModel!.members_id}';
+    await Dio().get(apiGetUserWhereId).then((value) {
+      for (var item in json.decode(value.data)) {
+        setState(() {
+          userModel = UserModel.fromMap(item);
+        });
+      }
+    });
+  }
+
   UserAccountsDrawerHeader buildHeader() => UserAccountsDrawerHeader(
-      decoration: BoxDecoration(
-          gradient: RadialGradient(
-              radius: 1,
-              center: Alignment(-0.65, -1.2),
-              colors: [Colors.white, MyConstant.dark])),
-      currentAccountPicture: userModel == null
-          ? ShowImage(path: MyConstant.image1)
-          : userModel!.pic_members.isEmpty
+          otherAccountsPictures: [
+            IconButton(
+              onPressed: () =>
+                  Navigator.pushNamed(context, MyConstant.routeShowProfile)
+                      .then((value) => refreshUserModel()),
+              icon: Icon(Icons.face_outlined),
+              iconSize: 33,
+              color: Colors.white,
+              tooltip: 'ข้อมูลโปรไฟล์ ',
+            ),
+            IconButton(
+              onPressed: () => Navigator.pushNamed(
+                      context, MyConstant.routeEditProfileCustomer)
+                  .then((value) => refreshUserModel()),
+              icon: Icon(Icons.edit_note_outlined),
+              iconSize: 36,
+              color: Colors.white,
+              tooltip: 'เเก้ไขโปรไฟล์ ',
+            )
+          ],
+          decoration: BoxDecoration(
+              gradient: RadialGradient(
+                  radius: 1,
+                  center: Alignment(-0.65, -1.2),
+                  colors: [Colors.white, MyConstant.dark])),
+          currentAccountPicture: userModel == null
               ? ShowImage(path: MyConstant.image1)
-              : CircleAvatar(
-                  backgroundImage: CachedNetworkImageProvider(
-                      '${MyConstant.domain}${userModel!.pic_members}'),
-                ),
-      accountName: ShowTitle(
-        title: userModel == null ? '' : userModel!.name,
-        textStyle: MyConstant().h2Whitestyle(),
-      ),
-      accountEmail: null);
+              : userModel!.pic_members.isEmpty
+                  ? ShowImage(path: MyConstant.image1)
+                  : CircleAvatar(
+                      backgroundImage: CachedNetworkImageProvider(
+                          '${MyConstant.domain}${userModel!.pic_members}'),
+                    ),
+          accountName: ShowTitle(
+            title: userModel == null
+                ? ''
+                : '${userModel!.name} ${userModel!.surname}',
+            textStyle: MyConstant().h2Whitestyle(),
+          ),
+          accountEmail: null);
 }

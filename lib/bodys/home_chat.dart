@@ -15,7 +15,6 @@ class HomeChat extends StatefulWidget {
 class _HomeChatState extends State<HomeChat> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     readDataChat(1);
   }
@@ -47,10 +46,10 @@ class _HomeChatState extends State<HomeChat> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          //    backgroundColor: Colors.white,
           title: Text(
             'แชท',
-            style: TextStyle(color: Colors.black38),
+            //   style: TextStyle(color: Colors.black38),
           ),
         ),
         body: StreamBuilder(

@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:boneclinicmsu/bodys/home_chat.dart';
+import 'package:boneclinicmsu/bodys/show_doctor.dart';
+import 'package:boneclinicmsu/bodys/show_profile.dart';
 import 'package:boneclinicmsu/states/add_product.dart';
 import 'package:boneclinicmsu/states/add_tabledatetime_doctor.dart';
 import 'package:boneclinicmsu/states/add_wallet.dart';
@@ -10,6 +12,7 @@ import 'package:boneclinicmsu/states/confirm_add_wallet.dart';
 import 'package:boneclinicmsu/states/create_account.dart';
 import 'package:boneclinicmsu/states/customer_service.dart';
 import 'package:boneclinicmsu/states/doctor_service.dart';
+import 'package:boneclinicmsu/states/edit_profile_customer.dart';
 import 'package:boneclinicmsu/states/show_cart.dart';
 import 'package:boneclinicmsu/unility/my_constant.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +30,9 @@ final Map<String, WidgetBuilder> map = {
   '/confirmAddWallet': (BuildContext context) => ConfirmAddWallet(),
   '/addTableDatetime': (BuildContext context) => AddTableDateTime(),
   '/homeChat': (BuildContext context) => HomeChat(),
+  '/showDoctor': (BuildContext context) => ShowDoctor(),
+  '/editProfileCustomer': (BuildContext context) => EditProfileCustomer(),
+  '/showProfile': (BuildContext context) => ShowProfile(),
 };
 
 String? initlalRoute;
