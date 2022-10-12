@@ -1,7 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 
 import 'package:boneclinicmsu/models/sqlite_model.dart';
 import 'package:boneclinicmsu/models/user_model.dart';
+import 'package:boneclinicmsu/models/wallet_buyer_model.dart';
 import 'package:boneclinicmsu/models/wallet_model.dart';
 import 'package:boneclinicmsu/unility/my_constant.dart';
 import 'package:boneclinicmsu/unility/my_dialod.dart';
@@ -26,12 +29,17 @@ class _ShowCartState extends State<ShowCart> {
   bool load = true;
   double? total = 0;
   UserModel? userModel;
+  WalletBuyerModel? walletBuyerModel;
+  double? total_moneyBuyer = 0;
+  double? sum_calculate = 0;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     processReadSQLite();
+    ToTal_moneyBuyer();
+    print('88888==>$total_moneyBuyer');
   }
 
   Future<Null> processReadSQLite() async {
@@ -57,6 +65,27 @@ class _ShowCartState extends State<ShowCart> {
         total = total! + sumInt;
       });
     }
+  }
+
+  Future<Null> ToTal_moneyBuyer() async {
+    //  double total_moneyBuyer = 0;
+    total_moneyBuyer = 0;
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String id_buyer = preferences.getString('id')!;
+
+    String apiGetUser =
+        '${MyConstant.domain}/boneclinic/get_MoneyWhereidBuyer.php?isAdd=true&id_buyer=$id_buyer';
+    await Dio().get(apiGetUser).then((value) {
+      print('value from API ==>> $value');
+      for (var item in json.decode(value.data)) {
+        setState(() {
+          walletBuyerModel = WalletBuyerModel.fromMap(item);
+          total_moneyBuyer =
+              double.parse(walletBuyerModel!.total_money.toString());
+          print('total_moneyBuyer==>$total_moneyBuyer');
+        });
+      }
+    });
   }
 
   @override
@@ -180,7 +209,7 @@ class _ShowCartState extends State<ShowCart> {
                 } else {
                   print('#12feb Cannot Order');
                   MyDialog().normalDialog(context, 'ไม่สามารถซื้อได้ ?',
-                      'จำนวนเงินที่มีอยู่ : $approveWallet  บาท\nจำนวนงินที่ต้องจ่าย: \n$totalบาท');
+                      'จำนวนเงินที่มีอยู่ : $total_moneyBuyer  บาท\nจำนวนงินที่ต้องจ่าย: \n$totalบาท');
                 }
               }
             });
@@ -207,7 +236,7 @@ class _ShowCartState extends State<ShowCart> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               ShowTitle(
-                title: 'Total :',
+                title: 'ราคาที่ต้องจ่าย :',
                 textStyle: MyConstant().h2BlueStyle(),
               ),
             ],
@@ -345,5 +374,69 @@ class _ShowCartState extends State<ShowCart> {
   Future<void> orderfunc() async {
     Navigator.pop(context);
     print('orderFucn work');
+    calculateTotalMoneyBuyer();
+    processEditMoneyBuyer();
+    String idOrder = await processInsertMySQL();
+    processInsertOrderDetail(idOrder);
+    MyDialog()
+        .normalDialog(context, 'การซื้อสำเร็จ', 'ทำรายการเสร็จสิ้นแล้ว !!!');
+  }
+
+  Future<String> processInsertMySQL() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String idBuyer = preferences.getString('id')!;
+    String idOrder = '';
+    String apiInsertOrder =
+        '${MyConstant.domain}/boneclinic/insert_OrderProduct.php?isAdd=true&idBuyer=$idBuyer&total_price=$total';
+    print('##BuyerID $idBuyer $total');
+    await Dio().get(apiInsertOrder).then((value) {
+      if (value.toString() != 'false') {
+        Navigator.pop(context);
+        idOrder = value.toString();
+      } else {
+        MyDialog().normalDialog(context, ' False !!!', 'Plase Try Again');
+      }
+    });
+    return idOrder;
+  }
+
+  Future<Null> processInsertOrderDetail(String idOrder) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String idBuyer = preferences.getString('id')!;
+    for (var i = 0; i < sqliteModels.length; i++) {
+      String idProduct = sqliteModels[i].id.toString();
+      String amountProduct = sqliteModels[i].amount.toString();
+      String total_Price = sqliteModels[i].sum.toString();
+
+      String apiInsertOrderDetail =
+          '${MyConstant.domain}/boneclinic/insertOrderProduct_Detail.php?isAdd=true&id_orderProduct=$idOrder&idBuyer=$idBuyer&idProduct=$idProduct&amountProduct=$amountProduct&total=$total_Price';
+      print('##BuyerID $apiInsertOrderDetail');
+      await Dio().get(apiInsertOrderDetail).then((value) {
+        if (value.toString() == 'true') {
+          // Navigator.pop(context);
+        } else {
+          MyDialog().normalDialog(context, ' False !!!', 'Plase Try Again');
+        }
+      });
+    }
+    SQLiteHelper().emptySQLite();
+  }
+
+  Future<Null> processEditMoneyBuyer() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String idBuyer = preferences.getString('id')!;
+    String apiMoneyBuyer =
+        '${MyConstant.domain}/boneclinic/editmoneyCustomerWhereId.php?isAdd=true&id_buyer=$idBuyer&total_money=$sum_calculate';
+    await Dio().get(apiMoneyBuyer).then((value) {
+      print('$apiMoneyBuyer');
+    });
+  }
+
+  void calculateTotalMoneyBuyer() async {
+    sum_calculate = 0;
+    setState(() {
+      sum_calculate = total_moneyBuyer! - total!;
+      print('##sum_calculate=>$sum_calculate');
+    });
   }
 }

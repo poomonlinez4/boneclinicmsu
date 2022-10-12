@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class MyConstant {
   // Genernal
   static String appName = 'Bone Clinic';
-  static String domain = 'https://2b39-184-82-49-252.ap.ngrok.io';
+  static String domain = 'https://7c93-183-88-159-242.ap.ngrok.io';
   static String urlPrompay = 'https://promptpay.io/0922698037.png';
   static String publicKey = 'pkey_test_5svsm90kpsw24gjh0ce';
   static String secreKey = 'skey_test_5svsm920ezn9s0oyq2o';
@@ -24,6 +24,7 @@ class MyConstant {
   static String routeShowProfile = '/showProfile';
 
   static String routeAddTableDateTime = '/addTableDatetime';
+  static String routeShowToggleBar = '/showToggleBar';
 
   // Image
   static String image1 = 'images/image (1).png';

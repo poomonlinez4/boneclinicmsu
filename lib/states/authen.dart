@@ -82,7 +82,7 @@ class _AuthenState extends State<Authen> {
                   checkAuthen(user: user, password: password);
                 }
               },
-              child: Text('Login'),
+              child: Text('Sign in'),
             )),
       ],
     );

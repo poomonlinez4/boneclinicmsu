@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:boneclinicmsu/bodys/home_chat.dart';
 import 'package:boneclinicmsu/bodys/my_order_customer.dart';
 import 'package:boneclinicmsu/bodys/show_all_shop_customer.dart';
 import 'package:boneclinicmsu/bodys/show_list_buyCourse.dart';
@@ -24,10 +25,7 @@ class DoctorService extends StatefulWidget {
 }
 
 class _DoctorServiceState extends State<DoctorService> {
-  List<Widget> widgets = [
-    ShowListBuyCourse(),
-    ShowTableDoctor(),
-  ];
+  List<Widget> widgets = [ShowListBuyCourse(), ShowTableDoctor(), HomeChat()];
 
   int indexWidget = 0;
   UserModel? userModel;
@@ -84,6 +82,7 @@ class _DoctorServiceState extends State<DoctorService> {
                 buildHeader(),
                 menuShowListBuyCourse(),
                 menuTableDoctor(),
+                menuChatDoctor()
               ],
             ),
             ShowSignOut(),
@@ -130,6 +129,26 @@ class _DoctorServiceState extends State<DoctorService> {
       onTap: () {
         setState(() {
           indexWidget = 1;
+          Navigator.pop(context);
+        });
+      },
+    );
+  }
+
+  ListTile menuChatDoctor() {
+    return ListTile(
+      leading: Icon(Icons.chat, size: 36, color: MyConstant.dark),
+      title: ShowTitle(
+        title: 'Chat',
+        textStyle: MyConstant().h2style(),
+      ),
+      subtitle: ShowTitle(
+        title: 'chat ',
+        textStyle: MyConstant().h3style(),
+      ),
+      onTap: () {
+        setState(() {
+          indexWidget = 2;
           Navigator.pop(context);
         });
       },

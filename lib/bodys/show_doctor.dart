@@ -141,6 +141,14 @@ class _ShowDoctorState extends State<ShowDoctor> {
                           title: 'โทร :${showDoctorModels[index].phone}',
                           textStyle: MyConstant().h2style(),
                         ),
+                        ElevatedButton(
+                          // style: ElevatedButton.styleFrom(primary: Colors.red),
+                          style: MyConstant().myButtonStyle(),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text('เเชทเพื่อปรึกษา '),
+                        )
 
                         // ShowTitle(
                         //   title: cutWord(

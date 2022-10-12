@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:boneclinicmsu/bodys/home_chat.dart';
+import 'package:boneclinicmsu/bodys/show_Toggle_Bar.dart';
 import 'package:boneclinicmsu/bodys/show_doctor.dart';
 import 'package:boneclinicmsu/bodys/show_profile.dart';
 import 'package:boneclinicmsu/states/add_product.dart';
@@ -16,6 +17,9 @@ import 'package:boneclinicmsu/states/edit_profile_customer.dart';
 import 'package:boneclinicmsu/states/show_cart.dart';
 import 'package:boneclinicmsu/unility/my_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final Map<String, WidgetBuilder> map = {
@@ -33,11 +37,14 @@ final Map<String, WidgetBuilder> map = {
   '/showDoctor': (BuildContext context) => ShowDoctor(),
   '/editProfileCustomer': (BuildContext context) => EditProfileCustomer(),
   '/showProfile': (BuildContext context) => ShowProfile(),
+  // '/showToggleBar': (BuildContext context) => ShowToggleBar(),
 };
 
 String? initlalRoute;
 
 Future<Null> main() async {
+  Intl.defaultLocale = "th";
+  initializeDateFormatting();
   HttpOverrides.global = MyHttpOverrides();
 
   WidgetsFlutterBinding.ensureInitialized();
@@ -88,10 +95,16 @@ class MyApp extends StatelessWidget {
 
     HttpOverrides.global = MyHttpOverrides();
     return MaterialApp(
-        title: MyConstant.appName,
-        routes: map,
-        initialRoute: initlalRoute,
-        theme: ThemeData(primarySwatch: materialColor));
+      title: MyConstant.appName,
+      routes: map,
+      initialRoute: initlalRoute,
+      theme: ThemeData(
+        primarySwatch: materialColor,
+        // textTheme:
+        //     GoogleFonts.ibmPlexSansThaiTextTheme(Theme.of(context).textTheme)
+        //         .copyWith(bodyText1: TextStyle(fontSize: 16)),
+      ),
+    );
   }
 }
 

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 class MyDialog {
   final Function()? funcAction;
+  // final VoidCallback? onPressed;
   MyDialog({this.funcAction});
 
   Future<Null> showProgressDialog(BuildContext context) async {

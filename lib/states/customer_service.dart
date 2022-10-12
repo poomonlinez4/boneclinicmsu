@@ -16,6 +16,7 @@ import 'package:boneclinicmsu/widgets/show_signout.dart';
 import 'package:boneclinicmsu/widgets/show_title.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -87,6 +88,11 @@ class _CustomerServiceState extends State<CustomerService> {
         actions: [
           Row(
             children: [
+              IconButton(
+                onPressed: () =>
+                    Navigator.pushNamed(context, MyConstant.routeShowToggleBar),
+                icon: Icon(Icons.history),
+              ),
               IconButton(
                 onPressed: () =>
                     Navigator.pushNamed(context, MyConstant.routeShowCart),
@@ -282,6 +288,14 @@ class _CustomerServiceState extends State<CustomerService> {
 
   UserAccountsDrawerHeader buildHeader() => UserAccountsDrawerHeader(
           otherAccountsPictures: [
+            // Column(
+            //   crossAxisAlignment: CrossAxisAlignment.center,
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     Icon(CupertinoIcons.money_dollar_circle),
+            //     Text('data')
+            //   ],
+            // ),
             IconButton(
               onPressed: () =>
                   Navigator.pushNamed(context, MyConstant.routeShowProfile)
@@ -311,8 +325,10 @@ class _CustomerServiceState extends State<CustomerService> {
               : userModel!.pic_members.isEmpty
                   ? ShowImage(path: MyConstant.image1)
                   : CircleAvatar(
+                      radius: 30,
                       backgroundImage: CachedNetworkImageProvider(
-                          '${MyConstant.domain}${userModel!.pic_members}'),
+                        '${MyConstant.domain}${userModel!.pic_members}',
+                      ),
                     ),
           accountName: ShowTitle(
             title: userModel == null
