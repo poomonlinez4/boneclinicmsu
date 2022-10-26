@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:boneclinicmsu/bodys/home_chat.dart';
 import 'package:boneclinicmsu/bodys/my_order_customer.dart';
 import 'package:boneclinicmsu/bodys/show_all_shop_customer.dart';
-import 'package:boneclinicmsu/bodys/show_list_buyCourse.dart';
+import 'package:boneclinicmsu/bodys/tabbarPage/show_list_buyCourse.dart';
 import 'package:boneclinicmsu/bodys/show_table_doctor.dart';
 import 'package:boneclinicmsu/models/user_model.dart';
 import 'package:boneclinicmsu/states/show_course_customer.dart';

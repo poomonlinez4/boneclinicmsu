@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class MyConstant {
   // Genernal
   static String appName = 'Bone Clinic';
-  static String domain = 'https://7c93-183-88-159-242.ap.ngrok.io';
+  static String domain = 'https://1d48-27-55-84-217.ap.ngrok.io/proj';
   static String urlPrompay = 'https://promptpay.io/0922698037.png';
   static String publicKey = 'pkey_test_5svsm90kpsw24gjh0ce';
   static String secreKey = 'skey_test_5svsm920ezn9s0oyq2o';
@@ -135,6 +135,24 @@ class MyConstant {
         fontSize: 14,
         color: Colors.white,
         fontWeight: FontWeight.normal,
+      );
+
+  TextStyle h3RedStyle() => TextStyle(
+        fontSize: 14,
+        color: Colors.red.shade700,
+        fontWeight: FontWeight.w700,
+      );
+
+  TextStyle h3BlueStyle() => TextStyle(
+        fontSize: 14,
+        color: Colors.blue.shade800,
+        fontWeight: FontWeight.w700,
+      );
+
+  TextStyle h3GreenStyle() => TextStyle(
+        fontSize: 14,
+        color: Colors.green.shade800,
+        fontWeight: FontWeight.w700,
       );
 
   ButtonStyle myButtonStyle() => ElevatedButton.styleFrom(

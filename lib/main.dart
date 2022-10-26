@@ -37,7 +37,7 @@ final Map<String, WidgetBuilder> map = {
   '/showDoctor': (BuildContext context) => ShowDoctor(),
   '/editProfileCustomer': (BuildContext context) => EditProfileCustomer(),
   '/showProfile': (BuildContext context) => ShowProfile(),
-  // '/showToggleBar': (BuildContext context) => ShowToggleBar(),
+  '/showToggleBar': (BuildContext context) => ShowToggleBar(),
 };
 
 String? initlalRoute;
