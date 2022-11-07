@@ -175,6 +175,7 @@ class _ShowCourseState extends State<ShowCourse> {
           CourseModel model = CourseModel.fromMap(item);
 
           String string = model.pic_course;
+          print(string);
           string = string.substring(1, string.length - 1);
           List<String> strings = string.split(',');
           int i = 0;
@@ -542,7 +543,30 @@ class _ShowCourseState extends State<ShowCourse> {
             onChanged: (value) {
               setState(() {
                 choose_time = value as String?;
-                print('##time==>$choose_time');
+                print(' ==Date_ ${dateController.text}');
+                print('==Time_ $choose_time');
+
+                if (Buydate.length != 0) {
+                  for (var i = 0; i < Buydate.length; i++) {
+                    if (Buydate[i].time == value) {
+                      Buydate.add(buyCourseModel[i]);
+                      print('มีคนจองเเล้ว');
+                      choose_time = '';
+                      MyDialog().normalDialog(context, 'มีคนจองแล้ว',
+                          'กรุณาเลือกเวลาใหม่อีกครั้ง !!!');
+
+                      return;
+                    } else {
+                      evaluate = false;
+                      print('จองได้');
+                    }
+                  }
+                } else {
+                  evaluate = false;
+                  print('จองได้');
+                }
+
+                evaluate ? null : choose_time = value as String?;
               });
             },
             title: ShowTitle(
@@ -567,7 +591,30 @@ class _ShowCourseState extends State<ShowCourse> {
             onChanged: (value) {
               setState(() {
                 choose_time = value as String?;
-                print('##time==>$choose_time');
+                print(' ==Date_ ${dateController.text}');
+                print('==Time_ $choose_time');
+
+                if (Buydate.length != 0) {
+                  for (var i = 0; i < Buydate.length; i++) {
+                    if (Buydate[i].time == value) {
+                      Buydate.add(buyCourseModel[i]);
+                      print('มีคนจองเเล้ว');
+                      choose_time = '';
+                      MyDialog().normalDialog(context, 'มีคนจองแล้ว',
+                          'กรุณาเลือกเวลาใหม่อีกครั้ง !!!');
+
+                      return;
+                    } else {
+                      evaluate = false;
+                      print('จองได้');
+                    }
+                  }
+                } else {
+                  evaluate = false;
+                  print('จองได้');
+                }
+                print('5555555');
+                evaluate ? null : choose_time = value as String?;
               });
             },
             title: ShowTitle(
@@ -592,7 +639,30 @@ class _ShowCourseState extends State<ShowCourse> {
             onChanged: (value) {
               setState(() {
                 choose_time = value as String?;
-                print('##time==>$choose_time');
+                print(' ==Date_ ${dateController.text}');
+                print('==Time_ $choose_time');
+
+                if (Buydate.length != 0) {
+                  for (var i = 0; i < Buydate.length; i++) {
+                    if (Buydate[i].time == value) {
+                      Buydate.add(buyCourseModel[i]);
+                      print('มีคนจองเเล้ว');
+                      choose_time = '';
+                      MyDialog().normalDialog(context, 'มีคนจองแล้ว',
+                          'กรุณาเลือกเวลาใหม่อีกครั้ง !!!');
+
+                      return;
+                    } else {
+                      evaluate = false;
+                      print('จองได้');
+                    }
+                  }
+                } else {
+                  evaluate = false;
+                  print('จองได้');
+                }
+                print('5555555');
+                evaluate ? null : choose_time = value as String?;
               });
             },
             title: ShowTitle(
@@ -616,18 +686,31 @@ class _ShowCourseState extends State<ShowCourse> {
             groupValue: choose_time,
             onChanged: (value) {
               setState(() {
-                if (API_dateController.text == dateController.text &&
-                    API_choose_time == choose_time) {
-                  evaluate = true;
-                  print('การจองไม่สำเร็จ');
+                choose_time = value as String?;
+                print(' ==Date_ ${dateController.text}');
+                print('==Time_ $choose_time');
+
+                if (Buydate.length != 0) {
+                  for (var i = 0; i < Buydate.length; i++) {
+                    if (Buydate[i].time == value) {
+                      Buydate.add(buyCourseModel[i]);
+                      print('มีคนจองเเล้ว');
+                      choose_time = '';
+                      MyDialog().normalDialog(context, 'มีคนจองแล้ว',
+                          'กรุณาเลือกเวลาใหม่อีกครั้ง !!!');
+
+                      return;
+                    } else {
+                      evaluate = false;
+                      print('จองได้');
+                    }
+                  }
                 } else {
                   evaluate = false;
-                  print('การจองสำเร็จxx');
+                  print('จองได้');
                 }
+
                 evaluate ? null : choose_time = value as String?;
-                print('$API_dateController ==99999999 $dateController');
-                print(' $API_choose_time ==888888888 $choose_time');
-                print('##time==>$choose_time');
               });
             },
             title: ShowTitle(

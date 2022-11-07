@@ -149,7 +149,8 @@ class _CreateAccountState extends State<CreateAccount> {
           width: size * 0.6,
           child: TextFormField(
             controller: emailController,
-            keyboardType: TextInputType.phone, //ทำให้คีย์บอร์ดกดได้แค่แบบตัวเลข
+            keyboardType:
+                TextInputType.emailAddress, //ทำให้คีย์บอร์ดกดได้แค่แบบตัวเลข
             validator: (value) {
               if (value!.isEmpty) {
                 return 'กรุณากรอก อีเมล ด้วยค่ะ';

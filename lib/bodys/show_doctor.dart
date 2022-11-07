@@ -79,7 +79,29 @@ class _ShowDoctorState extends State<ShowDoctor> {
       body: load
           ? showProgress()
           : haveDoctor!
-              ? listCourse()
+              ? ListView(shrinkWrap: true, children: [
+                  Container(
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.symmetric(vertical: 16),
+                            width: 400,
+                            child: ShowImage(
+                              path: MyConstant.tb_doctor,
+                            ),
+                          ),
+                          ShowTitle(
+                            title: 'ตารางทำงานหมอ',
+                            textStyle: MyConstant().h1style(),
+                          ),
+                          listDoctor()
+                        ],
+                      ),
+                    ),
+                  ),
+                ])
               : Center(
                   child: ShowTitle(
                     title: 'No Doctor',
@@ -89,11 +111,16 @@ class _ShowDoctorState extends State<ShowDoctor> {
     );
   }
 
-  LayoutBuilder listCourse() {
+  SizedBox listDoctor() {
     double size = MediaQuery.of(context).size.width;
+    int showdoctorLength = showDoctorModels.length;
+    int sum_showdoctorLength = 200 * showdoctorLength;
+    return SizedBox(
+      height: sum_showdoctorLength.toDouble(),
+      child: ListView.builder(
+        physics: NeverScrollableScrollPhysics(),
+        //  scrollDirection: Axis.vertical,
 
-    return LayoutBuilder(
-      builder: (context, constraints) => ListView.builder(
         itemCount: showDoctorModels.length,
         itemBuilder: (context, index) => GestureDetector(
           onTap: () {
@@ -104,8 +131,8 @@ class _ShowDoctorState extends State<ShowDoctor> {
             child: Row(
               children: [
                 Container(
-                  width: constraints.maxWidth * 0.4,
-                  height: constraints.maxWidth * 0.48,
+                  width: size * 0.4,
+                  height: size * 0.5,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: CachedNetworkImage(
@@ -120,10 +147,10 @@ class _ShowDoctorState extends State<ShowDoctor> {
                   ),
                 ),
                 Container(
-                  width: constraints.maxWidth * 0.48,
-                  height: constraints.maxWidth * 0.4,
+                  width: 200,
+                  height: 200,
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(20.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

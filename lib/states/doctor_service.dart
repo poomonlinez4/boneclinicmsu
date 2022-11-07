@@ -1,14 +1,13 @@
 import 'dart:convert';
 
 import 'package:boneclinicmsu/bodys/home_chat.dart';
-import 'package:boneclinicmsu/bodys/my_order_customer.dart';
-import 'package:boneclinicmsu/bodys/show_all_shop_customer.dart';
-import 'package:boneclinicmsu/bodys/tabbarPage/show_list_buyCourse.dart';
+import 'package:boneclinicmsu/bodys/show_Buyer_buyCourse.dart';
+
 import 'package:boneclinicmsu/bodys/show_table_doctor.dart';
 import 'package:boneclinicmsu/models/user_model.dart';
-import 'package:boneclinicmsu/states/show_course_customer.dart';
+
 import 'package:boneclinicmsu/unility/my_constant.dart';
-import 'package:boneclinicmsu/unility/my_dialod.dart';
+
 import 'package:boneclinicmsu/widgets/show_image.dart';
 import 'package:boneclinicmsu/widgets/show_signout.dart';
 import 'package:boneclinicmsu/widgets/show_title.dart';
@@ -25,7 +24,7 @@ class DoctorService extends StatefulWidget {
 }
 
 class _DoctorServiceState extends State<DoctorService> {
-  List<Widget> widgets = [ShowListBuyCourse(), ShowTableDoctor(), HomeChat()];
+  List<Widget> widgets = [ShowBuyerBuyCourse(), ShowTableDoctor(), HomeChat()];
 
   int indexWidget = 0;
   UserModel? userModel;
@@ -54,16 +53,6 @@ class _DoctorServiceState extends State<DoctorService> {
           '${MyConstant.domain}/boneclinic/getWalletWhereIdBuyer.php?isAdd=true&idBuyer=${userModel!.members_id}';
       await Dio().get(path).then((value) {
         print('### value getWalletWhereId ==> $value');
-
-        if (value.toString() == 'null') {
-          print('#### action Alert add Wallet');
-          MyDialog(
-            funcAction: () {
-              Navigator.pop(context);
-              Navigator.pushNamed(context, MyConstant.routeAddWallet);
-            },
-          ).actionDialog(context, 'No Wallet', 'Please Add Wallet');
-        }
       });
     });
   }

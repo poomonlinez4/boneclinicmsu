@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class MyConstant {
   // Genernal
   static String appName = 'Bone Clinic';
-  static String domain = 'https://1d48-27-55-84-217.ap.ngrok.io/proj';
+  static String domain = 'http://202.28.34.205:8080/62011211039';
   static String urlPrompay = 'https://promptpay.io/0922698037.png';
   static String publicKey = 'pkey_test_5svsm90kpsw24gjh0ce';
   static String secreKey = 'skey_test_5svsm920ezn9s0oyq2o';
@@ -38,6 +38,7 @@ class MyConstant {
   static String image9 = 'images/image 9.png';
   static String avatar = 'images/avatar.png';
   static String HotDeal02 = 'images/HotDeal02.jpg';
+  static String tb_doctor = 'images/tb_doctor.jpg';
 
   //Color
   static Color primary = Color(0xffef9a9a);
@@ -152,6 +153,18 @@ class MyConstant {
   TextStyle h3GreenStyle() => TextStyle(
         fontSize: 14,
         color: Colors.green.shade800,
+        fontWeight: FontWeight.w700,
+      );
+
+  TextStyle h3BlackStyle() => TextStyle(
+        fontSize: 14,
+        color: Colors.black,
+        fontWeight: FontWeight.w700,
+      );
+
+  TextStyle h4BlackStyle() => TextStyle(
+        fontSize: 12,
+        color: Colors.black,
         fontWeight: FontWeight.w700,
       );
 

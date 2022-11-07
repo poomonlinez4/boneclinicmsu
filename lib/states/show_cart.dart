@@ -404,7 +404,7 @@ class _ShowCartState extends State<ShowCart> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String idBuyer = preferences.getString('id')!;
     for (var i = 0; i < sqliteModels.length; i++) {
-      String idProduct = sqliteModels[i].id.toString();
+      String idProduct = sqliteModels[i].idProduct.toString();
       String amountProduct = sqliteModels[i].amount.toString();
       String total_Price = sqliteModels[i].sum.toString();
 

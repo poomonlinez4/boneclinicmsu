@@ -39,59 +39,65 @@ class _ShowToggleBarState extends State<ShowToggleBar>
         centerTitle: true,
         //   backgroundColor: Colors.orangeAccent,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            child: Column(
-              children: [
-                SizedBox(height: 30),
-                Container(
-                  // height: 50,
-                  width: MediaQuery.of(context).size.height,
-                  decoration: BoxDecoration(
-                      //   color: Colors.redAccent.shade100,
-                      color: MyConstant.primary,
-                      borderRadius: BorderRadius.circular(5)),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(5),
-                        child: TabBar(
-                          unselectedLabelColor: Colors.white,
-                          labelColor: Colors.black,
-                          indicatorColor: Colors.white,
-                          indicatorWeight: 2,
-                          indicator: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5),
+      body: Container(
+        //decoration: MyConstant().planBackground(),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              child: Column(
+                children: [
+                  SizedBox(height: 30),
+                  Container(
+                    // height: 50,
+                    width: MediaQuery.of(context).size.height,
+                    decoration: BoxDecoration(
+                        //   color: Colors.redAccent.shade100,
+                        color: MyConstant.primary,
+                        borderRadius: BorderRadius.circular(5)),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(5),
+                          child: TabBar(
+                            unselectedLabelColor: Colors.white,
+                            labelColor: Colors.black,
+                            indicatorColor: Colors.white,
+                            indicatorWeight: 2,
+                            indicator: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            controller: tabController,
+                            tabs: [
+                              Tab(
+                                text: 'การนัดหมาย',
+                              ),
+                              Tab(
+                                text: 'ประวัติคำสั่งซื้อสินค้า',
+                              ),
+                            ],
                           ),
-                          controller: tabController,
-                          tabs: [
-                            Tab(
-                              text: 'การจองคอร์ส',
-                            ),
-                            Tab(
-                              text: 'ประวัติคำสั่งซื้อสินค้า',
-                            ),
-                          ],
                         ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TabBarView(
+                        controller: tabController,
+                        children: [
+                          // Tab1(),
+                          ShowListBuyCourse(),
+                          Tab2(),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: TabBarView(
-                    controller: tabController,
-                    children: [
-                      // Tab1(),
-                      ShowListBuyCourse(),
-                      Tab2(),
-                    ],
-                  ),
-                )
-              ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),

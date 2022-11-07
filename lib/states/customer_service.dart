@@ -84,7 +84,7 @@ class _CustomerServiceState extends State<CustomerService> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Bone Clinic ลูกค้า'),
+        title: Text('Bone Clinic '),
         actions: [
           Row(
             children: [

@@ -1,13 +1,11 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:boneclinicmsu/bodys/tabbarPage/show_order_product.dart';
 import 'package:boneclinicmsu/models/buycourse_model.dart';
-import 'package:boneclinicmsu/models/history_buycourse_model.dart';
+import 'package:boneclinicmsu/models/buyer_buyCourse_model.dart';
+import 'package:boneclinicmsu/models/order_product_detail_model.dart';
 import 'package:boneclinicmsu/models/order_product_model.dart';
-import 'package:boneclinicmsu/models/wallet_buyer_model.dart';
 import 'package:boneclinicmsu/unility/my_constant.dart';
-import 'package:boneclinicmsu/unility/my_dialod.dart';
 import 'package:boneclinicmsu/widgets/show_image.dart';
 import 'package:boneclinicmsu/widgets/show_no_data.dart';
 import 'package:boneclinicmsu/widgets/show_progress.dart';
@@ -15,29 +13,24 @@ import 'package:boneclinicmsu/widgets/show_title.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Tab2 extends StatefulWidget {
-  const Tab2({Key? key}) : super(key: key);
+class ShowBuyerBuyCourse extends StatefulWidget {
+  const ShowBuyerBuyCourse({Key? key}) : super(key: key);
 
   @override
-  State<Tab2> createState() => _Tab2State();
+  State<ShowBuyerBuyCourse> createState() => _ShowBuyerBuyCourseState();
 }
 
-class _Tab2State extends State<Tab2> {
+class _ShowBuyerBuyCourseState extends State<ShowBuyerBuyCourse> {
   bool load = true;
   bool? haveCourse;
-  List<OrderProductModel> orderproductModels = [];
+  List<BuyerBuyCourseModel> buyerbuyCourseModels = [];
   List<List<String>> listImages = [];
   int indexImage = 0;
 
   final formKey = GlobalKey<FormState>();
   TextEditingController nameController = TextEditingController();
-  WalletBuyerModel? walletBuyerModel;
-
-  List<BuyCourseModel> buyCourseModel = [];
-  List<BuyCourseModel> Buydate = [];
 
   bool dense = false;
   String _selection = '';
@@ -54,8 +47,7 @@ class _Tab2State extends State<Tab2> {
   Future<void> readAPI() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String id_buyer = preferences.getString('id')!;
-    String urlAPI =
-        '${MyConstant.domain}/boneclinic/get_OrderProductWhereUser.php?idBuyer=$id_buyer';
+    String urlAPI = '${MyConstant.domain}/boneclinic/get_Buyer_buyCourse.php';
     await Dio().get(urlAPI).then((value) {
       print('### value = $value');
 
@@ -66,13 +58,13 @@ class _Tab2State extends State<Tab2> {
         });
       } else {
         for (var item in json.decode(value.data)) {
-          OrderProductModel model = OrderProductModel.fromMap(item);
+          BuyerBuyCourseModel model = BuyerBuyCourseModel.fromMap(item);
 
           setState(() {
             haveCourse = true;
             load = false;
 
-            orderproductModels.add(model);
+            buyerbuyCourseModels.add(model);
           });
         }
       }
@@ -103,7 +95,7 @@ class _Tab2State extends State<Tab2> {
 
     return LayoutBuilder(
       builder: (context, constraints) => ListView.builder(
-        itemCount: orderproductModels.length,
+        itemCount: buyerbuyCourseModels.length,
         itemBuilder: (context, index) => GestureDetector(
           onTap: () {
             print('### You Click Index ==>> $index');
@@ -142,44 +134,47 @@ class _Tab2State extends State<Tab2> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           ShowTitle(
-                            title: 'วันที่สั่งซื้อ',
+                            title: 'คนที่จองคอร์ส',
                             textStyle: MyConstant().h1Redstyle(),
                           ),
-                          ShowTitle(
-                            title: ' ${orderproductModels[index].date_time} ',
-                            textStyle: MyConstant().h3BlackStyle(),
-                          ),
+
                           ShowTitle(
                             title:
-                                'ราคารวม: ${orderproductModels[index].total_price}',
+                                'วันที่ ${buyerbuyCourseModels[index].date}   เวลา ${buyerbuyCourseModels[index].time}',
                             textStyle: MyConstant().h3BlueStyle(),
                           ),
                           ShowTitle(
                             title:
-                                'สถานะการจัดส่ง: ${orderproductModels[index].status}  ',
+                                'ชื่อ: ${buyerbuyCourseModels[index].name}  ${buyerbuyCourseModels[index].surname} ',
                             textStyle: MyConstant().h3RedStyle(),
+                          ),
+
+                          ShowTitle(
+                            title:
+                                'เบอร์โทร: ${buyerbuyCourseModels[index].phone}  ',
+                            textStyle: MyConstant().h4BlackStyle(),
                           ),
                           ShowTitle(
                             title:
-                                'ที่อยู่การจัดส่ง:  \n ${orderproductModels[index].address}  ',
+                                'ชื่อคอร์สรักษา: ${buyerbuyCourseModels[index].name_course}  ',
                             textStyle: MyConstant().h4BlackStyle(),
                           ),
-                          ElevatedButton(
-                            // style: ElevatedButton.styleFrom(primary: Colors.red),
-                            style: MyConstant().myButtonStyle(),
-                            onPressed: () {
-                              print('Click ดูรายละเอียดคำสั่งซื้อ');
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        ShowOrderProductDetails(
-                                            orderproductModel:
-                                                orderproductModels[index]),
-                                  ));
-                            },
-                            child: Text('ดูรายละเอียดคำสั่งซื้อ '),
-                          )
+                          // ElevatedButton(
+                          //   // style: ElevatedButton.styleFrom(primary: Colors.red),
+                          //   style: MyConstant().myButtonStyle(),
+                          //   onPressed: () {
+                          //     print('Click ดูรายละเอียดคำสั่งซื้อ');
+                          //     Navigator.push(
+                          //         context,
+                          //         MaterialPageRoute(
+                          //           builder: (context) =>
+                          //               ShowOrderProductDetails(
+                          //                   orderproductModel:
+                          //                       buyerbuyCourseModels[index]),
+                          //         ));
+                          //   },
+                          //   child: Text('ดูรายละเอียดคำสั่งซื้อ '),
+                          // )
                         ],
                       ),
                     ),

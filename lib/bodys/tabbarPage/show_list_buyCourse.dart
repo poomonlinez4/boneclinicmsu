@@ -53,8 +53,6 @@ class _ShowListBuyCourseState extends State<ShowListBuyCourse> {
   void initState() {
     super.initState();
     readAPI();
-
-    dateController.text = "";
   }
 
   Future<void> readAPI() async {
@@ -108,7 +106,7 @@ class _ShowListBuyCourseState extends State<ShowListBuyCourse> {
                   // decoration: MyConstant().gradintLinearBackground(),
                   child: ShowNoData(
                     title: 'ไม่มี รายการจองคอร์ส',
-                    pathImage: MyConstant.image5,
+                    pathImage: MyConstant.image4,
                   ),
                 ),
     );
@@ -154,7 +152,7 @@ class _ShowListBuyCourseState extends State<ShowListBuyCourse> {
                       children: [
                         ShowTitle(
                           title:
-                              'วันที่จองไว้  \n ${historybuycourseModels[index].date} ',
+                              'วันที่จอง  \n ${historybuycourseModels[index].date} ',
                           textStyle: MyConstant().h3GreenStyle(),
                         ),
                         ShowTitle(
